@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHN Tender Intelligence — Avant Practice Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#002b5c;--blue:#0062b8;--light:#e8f0f9;--sky:#00a9e0;--gold:#f5a623;--green:#00875a;--red:#d0372b;--purple:#6b3fa0;--teal:#007a8a;--bg:#f4f6fa;--surface:#fff;--s2:#f0f4fa;--s3:#e4ecf6;--border:#d0dae8;--bhi:#aabbd4;--text:#111827;--muted:#4a5568;--dim:#8a9ab5;--urgent-bg:rgba(208,55,43,.07);--soon-bg:rgba(198,123,0,.07);--normal-bg:rgba(0,135,90,.07);}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;}
+.hdr{background:var(--navy);position:relative;overflow:hidden;}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--sky),var(--gold));}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 24px;flex-wrap:wrap;}
+.brand{display:flex;gap:11px;align-items:center;}
+.logo{background:#fff;border-radius:7px;padding:5px 11px;}
+.ln{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--navy);}
+.ls{font-size:9px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin-top:-1px;}
+.vb{width:1px;height:28px;background:rgba(255,255,255,.2);}
+.ht h1{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;}
+.ht p{font-size:11px;color:rgba(255,255,255,.55);margin-top:1px;}
+.hdr-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.ri{text-align:right;}
+.ri .rl{font-size:10px;color:rgba(255,255,255,.45);}
+.ri .rc{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--sky);line-height:1.1;}
+.btn{display:flex;align-items:center;gap:6px;padding:9px 17px;border-radius:7px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;background:var(--sky);color:#fff;box-shadow:0 2px 10px rgba(0,169,224,.35);transition:all .15s;flex-shrink:0;}
+.btn:hover:not(:disabled){background:#0091c2;transform:translateY(-1px);}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin .8s linear infinite;display:inline-block;}
+.hdr-b{display:flex;gap:5px;flex-wrap:wrap;padding:5px 24px 11px;}
+.b{padding:3px 8px;border-radius:20px;font-size:11px;font-weight:500;}
+.bd{background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.15);}
+.bg{background:rgba(0,135,90,.2);border:1px solid rgba(0,135,90,.4);color:#4cd9a0;}
+.ba{background:rgba(0,169,224,.2);border:1px solid rgba(0,169,224,.4);color:#7dd6f5;}
+.bo{background:rgba(245,166,35,.15);border:1px solid rgba(245,166,35,.35);color:var(--gold);}
+.br{background:rgba(208,55,43,.2);border:1px solid rgba(208,55,43,.4);color:#f97a70;}
+/* pulse dot */
+.pd{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:4px;vertical-align:middle;position:relative;}
+.pd::before{content:'';position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--green);animation:pr 2s ease-out infinite;}
+@keyframes pr{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(2)}}
+/* toolbar */
+.tb{background:#fff;border-bottom:1px solid var(--border);padding:9px 24px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;box-shadow:0 1px 3px rgba(0,43,92,.05);}
+.sw{position:relative;flex:1;min-width:160px;}
+.si{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:12px;pointer-events:none;}
+.sb{width:100%;padding:7px 11px 7px 28px;background:var(--s2);border:1.5px solid var(--border);border-radius:7px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;}
+.sb:focus{border-color:var(--blue);}
+.sb::placeholder{color:var(--dim);}
+.fb{padding:6px 12px;border-radius:6px;border:1.5px solid var(--border);background:#fff;color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.fb:hover{border-color:var(--blue);color:var(--blue);background:var(--light);}
+.fb.on{background:var(--navy);border-color:var(--navy);color:#fff;}
+.sr{background:var(--s2);border-bottom:1px solid var(--border);padding:5px 24px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.sl{font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:10px;color:var(--dim);}
+.so{background:none;border:none;color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;padding:3px 7px;border-radius:5px;transition:all .15s;}
+.so:hover{background:var(--s3);}
+.so.on{background:var(--navy);color:#fff;}
+.rc{margin-left:auto;font-size:12px;color:var(--dim);font-weight:500;}
+/* stats */
+.stats{display:flex;gap:6px;padding:9px 24px;background:#fff;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.sc{flex:1;min-width:75px;background:var(--s2);border:1.5px solid var(--border);border-radius:9px;padding:8px 12px;border-top:3px solid transparent;}
+.sc.sb2{border-top-color:var(--blue);}.sc.sg{border-top-color:var(--green);}.sc.st{border-top-color:var(--teal);}.sc.so2{border-top-color:var(--gold);}.sc.sr2{border-top-color:var(--red);}.sc.sp{border-top-color:var(--purple);}
+.sn{font-family:'Syne',sans-serif;font-size:21px;font-weight:800;color:var(--navy);}
+.sl2{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:1px;font-weight:600;}
+/* tabs */
+/* TABS — two rows so nothing is hidden */
+.tabs{background:#fff;border-bottom:2px solid var(--border);}
+.tab-row{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.tab-row-1{border-bottom:1px solid var(--border);}
+.tab-row-2{background:var(--s2);}
+.tab{padding:9px 14px;background:transparent;border:none;border-bottom:3px solid transparent;color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;font-weight:500;cursor:pointer;transition:all .15s;margin-bottom:-2px;white-space:nowrap;flex-shrink:0;}
+.tab:hover{color:var(--navy);}
+.tab.on{color:var(--blue);border-bottom-color:var(--blue);font-weight:600;}
+.tab.av.on{color:var(--navy);border-bottom-color:var(--gold);}
+.tab-row-2 .tab{font-size:12px;padding:8px 14px;}
+/* content */
+.ct{padding:13px 24px 50px;max-width:1160px;}
+/* progress */
+.pw{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:11px;display:none;box-shadow:0 2px 7px rgba(0,43,92,.05);}
+.pw.on{display:block;}
+.pt{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.ptl{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:7px;}
+.pb{background:var(--s3);border-radius:20px;height:7px;overflow:hidden;margin-bottom:8px;}
+.pf{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--blue),var(--sky));transition:width .4s;width:0%;}
+.plog{font-size:11px;color:var(--muted);max-height:110px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;}
+.pr{padding:2px 0;border-bottom:1px solid var(--border);display:flex;gap:7px;}
+.pr:last-child{border:none;}
+.lok{color:var(--green);font-weight:600;}.lnone{color:var(--dim);}.lerr{color:var(--red);font-weight:600;}
+.lphn{color:var(--blue);font-weight:600;min-width:170px;flex-shrink:0;}
+/* status bar */
+.sbar{display:flex;align-items:flex-start;gap:7px;background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:12px;color:var(--muted);}
+.sbar.l{border-color:var(--sky);background:rgba(0,169,224,.03);color:var(--teal);}
+.sbar.ok{border-color:var(--green);background:rgba(0,135,90,.03);color:var(--green);}
+.sbar.err{border-color:var(--red);background:var(--urgent-bg);color:var(--red);}
+.sbar.inf{border-color:var(--gold);background:var(--soon-bg);color:#7a4f00;}
+.sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:currentColor;margin-top:4px;}
+.sbar.l .sdot{animation:pls 1s infinite;}
+@keyframes pls{0%,100%{opacity:1}50%{opacity:.15}}
+/* scan grid */
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:5px;}
+.pc{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:8px 10px;cursor:pointer;transition:all .2s;}
+.pc:hover{border-color:var(--blue);}
+.pc.pend{opacity:.4;}
+.pc.chk{border-color:var(--sky);background:rgba(0,169,224,.03);animation:shim 1.5s ease infinite;}
+@keyframes shim{0%,100%{opacity:1}50%{opacity:.6}}
+.pc.fnd{border-color:var(--green);background:rgba(0,135,90,.03);}
+.pc.mty{opacity:.35;}
+.pc.err{border-color:var(--red);background:var(--urgent-bg);}
+.pc-ic{font-size:13px;margin-bottom:3px;}
+.pc-nm{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;color:var(--navy);line-height:1.3;}
+.pc-st{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;}
+.pc-ct{font-size:11px;font-weight:700;color:var(--green);margin-top:2px;}
+.pc-bar{height:3px;background:var(--s3);border-radius:3px;margin-top:5px;overflow:hidden;}
+.pc-bi{height:100%;border-radius:3px;background:var(--blue);width:0%;transition:width .4s;}
+.pc.chk .pc-bi{animation:sb 1.5s linear infinite;}
+@keyframes sb{0%{width:0%;margin-left:0}50%{width:50%;margin-left:25%}100%{width:0%;margin-left:100%}}
+/* dividers */
+.dv{display:flex;align-items:center;gap:9px;margin:12px 0 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
+.dv::before,.dv::after{content:'';flex:1;height:1px;}
+.dv-live{color:var(--teal);}
+.dv-live::before,.dv-live::after{background:linear-gradient(90deg,rgba(0,122,138,.3),transparent);}
+.dv-live::after{background:linear-gradient(90deg,transparent,rgba(0,122,138,.3));}
+.dv-base{color:var(--muted);}
+.dv-base::before,.dv-base::after{background:var(--border);}
+.dv-cl{color:var(--red);}
+.dv-cl::before,.dv-cl::after{background:linear-gradient(90deg,rgba(208,55,43,.3),transparent);}
+.dv-cl::after{background:linear-gradient(90deg,transparent,rgba(208,55,43,.3));}
+/* cards */
+.grid{display:flex;flex-direction:column;gap:5px;}
+.card{background:#fff;border:1.5px solid var(--border);border-left:4px solid transparent;border-radius:10px;padding:12px 16px;cursor:pointer;transition:transform .15s,box-shadow .15s;animation:fu .22s ease both;}
+@keyframes fu{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.card:hover{transform:translateX(2px);box-shadow:0 4px 14px rgba(0,43,92,.1);}
+.c-gp{border-left-color:var(--green);}.c-phn{border-left-color:var(--blue);}.c-sp{border-left-color:var(--purple);}.c-al{border-left-color:var(--gold);}.c-mh{border-left-color:var(--teal);}.c-lv{border-left-color:var(--sky);}
+.ctop{display:flex;justify-content:space-between;align-items:flex-start;gap:11px;}
+.ctit{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy);line-height:1.3;}
+.corg{font-size:12px;color:var(--blue);font-weight:600;margin-top:2px;}
+.cdsc{font-size:12px;color:var(--muted);margin-top:7px;line-height:1.6;}
+.cft{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;align-items:center;}
+.pill{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;border:1.5px solid transparent;white-space:nowrap;}
+.ps{background:var(--s2);border-color:var(--border);color:var(--muted);}
+.pg{background:rgba(0,135,90,.07);border-color:rgba(0,135,90,.25);color:var(--green);}
+.pp{background:rgba(0,98,184,.07);border-color:rgba(0,98,184,.2);color:var(--blue);}
+.pu{background:rgba(107,63,160,.07);border-color:rgba(107,63,160,.2);color:var(--purple);}
+.pa{background:rgba(245,166,35,.1);border-color:rgba(245,166,35,.3);color:#8a5f00;}
+.pm{background:rgba(0,122,138,.07);border-color:rgba(0,122,138,.2);color:var(--teal);}
+.pl{background:rgba(0,169,224,.07);border-color:rgba(0,169,224,.25);color:var(--sky);}
+.pav{background:rgba(245,166,35,.1);border-color:rgba(245,166,35,.35);color:#7a4f00;font-weight:700;}
+.cb{flex-shrink:0;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;min-width:80px;text-align:center;}
+.cu{background:var(--urgent-bg);color:var(--red);border:1.5px solid rgba(208,55,43,.25);}
+.cs{background:var(--soon-bg);color:#c67b00;border:1.5px solid rgba(198,123,0,.25);}
+.cn{background:var(--normal-bg);color:var(--green);border:1.5px solid rgba(0,135,90,.25);}
+.co{background:var(--s2);color:var(--muted);border:1.5px solid var(--border);}
+.dt{font-size:11px;margin-top:2px;text-align:right;font-weight:700;}
+/* closed box */
+.clbx{background:var(--urgent-bg);border:1.5px solid rgba(208,55,43,.2);border-radius:9px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#7a1e1e;line-height:1.7;}
+/* avant */
+.avh{background:linear-gradient(135deg,var(--navy) 0%,#003f7a 100%);border-radius:11px;padding:17px 21px;margin-bottom:15px;position:relative;overflow:hidden;box-shadow:0 4px 18px rgba(0,43,92,.2);}
+.avh::before{content:'';position:absolute;top:-35px;right:-35px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(0,169,224,.15),transparent 70%);pointer-events:none;}
+.avh h2{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:#fff;}
+.avh p{font-size:12px;color:rgba(255,255,255,.65);line-height:1.7;margin-top:4px;}
+.avs{margin-bottom:16px;}
+.avst{display:flex;align-items:center;gap:7px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--border);}
+.atg{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;}
+.atg-c{background:rgba(0,135,90,.1);border:1px solid rgba(0,135,90,.25);color:var(--green);}
+.atg-d{background:rgba(245,166,35,.12);border:1px solid rgba(245,166,35,.3);color:#8a5f00;}
+.atg-cl{background:var(--light);border:1px solid rgba(0,98,184,.2);color:var(--blue);}
+.avc{background:#fff;border:1.5px solid var(--border);border-radius:9px;padding:13px 16px;margin-bottom:6px;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.avc:hover{transform:translateY(-1px);box-shadow:0 3px 12px rgba(0,43,92,.09);}
+.avc.tc{border-left:4px solid var(--green);}.avc.td{border-left:4px solid var(--gold);}.avc.tcl{border-left:4px solid var(--blue);}
+.cwy{font-size:12px;color:#5a4200;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.25);border-radius:6px;padding:7px 10px;margin-top:7px;line-height:1.6;}
+.cwy strong{color:#8a5f00;}
+.itl{background:#fff;border:1.5px solid var(--border);border-radius:9px;padding:12px 14px;margin-bottom:6px;}
+.itl h4{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.itl li{font-size:12px;color:var(--muted);line-height:1.7;margin-left:15px;}
+/* portals */
+.pl{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:4px;display:flex;align-items:center;gap:9px;text-decoration:none;color:inherit;cursor:pointer;transition:all .15s;}
+.pl:hover{border-color:var(--blue);background:var(--light);}
+.plb{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--blue);}
+.pld{font-size:11px;color:var(--muted);}
+.plh{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);padding:7px 0 4px;border-bottom:1px solid var(--border);margin:11px 0 4px;}
+.plh:first-child{margin-top:0;}
+.empty{text-align:center;padding:45px 20px;color:var(--muted);}
+/* Win probability score */
+.wscore{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap;}
+.ws-hi{background:rgba(0,135,90,.12);border:1.5px solid rgba(0,135,90,.3);color:var(--green);}
+.ws-md{background:rgba(0,98,184,.08);border:1.5px solid rgba(0,98,184,.2);color:var(--blue);}
+.ws-lo{background:rgba(138,154,181,.12);border:1.5px solid var(--border);color:var(--muted);}
+.ws-na{background:rgba(208,55,43,.07);border:1.5px solid rgba(208,55,43,.2);color:var(--red);}
+/* Awarded / incumbent badge */
+.awarded-box{background:rgba(107,63,160,.06);border:1.5px solid rgba(107,63,160,.2);border-radius:7px;padding:7px 11px;margin-top:7px;font-size:12px;color:#4a2d7a;line-height:1.6;}
+.awarded-box strong{color:#3a1f6e;}
+/* Re-commission prediction */
+.recom-box{background:rgba(245,166,35,.07);border:1.5px solid rgba(245,166,35,.25);border-radius:7px;padding:7px 11px;margin-top:7px;font-size:12px;color:#6b4500;line-height:1.6;}
+.recom-box strong{color:#8a5f00;}
+/* Federal grants tab */
+.fed-hero{background:linear-gradient(135deg,#003a7a 0%,#004d9a 100%);border-radius:11px;padding:16px 20px;margin-bottom:14px;position:relative;overflow:hidden;}
+.fed-hero::before{content:'';position:absolute;top:-30px;right:-30px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%);pointer-events:none;}
+.fed-hero h2{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:#fff;}
+.fed-hero p{font-size:12px;color:rgba(255,255,255,.65);line-height:1.7;margin-top:4px;}
+.fed-sec{margin-bottom:16px;}
+.fed-sec-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px;}
+.fed-card{background:#fff;border:1.5px solid var(--border);border-left:4px solid var(--blue);border-radius:9px;padding:13px 16px;margin-bottom:6px;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.fed-card:hover{transform:translateY(-1px);box-shadow:0 3px 12px rgba(0,43,92,.09);}
+.fed-card.fc-open{border-left-color:var(--green);}
+.fed-card.fc-closed{border-left-color:var(--red);opacity:.72;}
+.fed-card.fc-ongoing{border-left-color:var(--teal);}
+.fed-card.fc-watch{border-left-color:var(--gold);}
+.fed-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;margin-right:4px;}
+.ft-open{background:var(--normal-bg);border:1px solid rgba(0,135,90,.25);color:var(--green);}
+.ft-closed{background:var(--urgent-bg);border:1px solid rgba(208,55,43,.2);color:var(--red);}
+.ft-ongoing{background:rgba(0,122,138,.07);border:1px solid rgba(0,122,138,.2);color:var(--teal);}
+.ft-watch{background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.3);color:#8a5f00;}
+.ft-phn{background:var(--avant-light,#e8f0f9);border:1px solid rgba(0,98,184,.2);color:var(--blue);}
+
+
+
+
+
+
+
+.hidden{display:none!important;}.tab-pane{display:none;}
+@media(max-width:620px){.hdr-inner,.tb,.stats,.ct,.tabs,.sr,.hdr-b{padding-left:12px;padding-right:12px;}.ctop{flex-direction:column;}.cb{align-self:flex-start;}.sg{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="brand">
+      <div class="logo"><div class="ln">Avant</div><div class="ls">Practice Solutions</div></div>
+      <div class="vb"></div>
+      <div class="ht"><h1>PHN Tender Intelligence</h1><p>31 PHNs · Direct fetch · Auto-refresh every 4 hours · No login needed</p></div>
+    </div>
+    <div class="hdr-right">
+      <div class="ri"><div class="rl"><span class="pd"></span>Next refresh</div><div class="rc" id="cd">4:00:00</div></div>
+      <button class="btn" id="scanBtn" onclick="startScan(true)"><span id="sci">🔍</span><span id="scl">Scan Now</span></button>
+    </div>
+  </div>
+  <div class="hdr-b">
+    <span class="b bd">🏥 31 PHNs</span>
+    <span class="b ba">📋 australiantenders.com.au — all 31 PHN issuer pages + <span id="direct-scan-badge" style="color:var(--sky)">direct PHN sites scanning...</span></span>
+    <span class="b bd" id="lstBadge">⏰ Not yet scanned</span>
+    <span class="b bd" id="dnBadge">0 / 31 scanned</span>
+    <span class="b bo" id="opBadge">0 open</span>
+    <span class="b br" id="clBadge">0 closed</span>
+    <span class="b bg">🔄 Auto-refresh ON · every 4h</span>
+    <span class="b bd" style="opacity:.7">✏️ Created by Caitlin Burns</span>
+  </div>
+</div>
+
+<div class="tb">
+  <div class="sw"><span class="si">🔍</span><input class="sb" id="q" placeholder="Search title, PHN, state…" oninput="ra()"></div>
+  <button class="fb on" onclick="sf('all',this)">All</button>
+  <button class="fb" onclick="sf('mental_health',this)">Mental Health</button>
+  <button class="fb" onclick="sf('gp',this)">Gen. Practice</button>
+  <button class="fb" onclick="sf('allied',this)">Allied Health</button>
+  <button class="fb" onclick="sf('phn',this)">PHN Service</button>
+</div>
+
+<div class="sr">
+  <span class="sl">Sort:</span>
+  <button class="so on" onclick="ss('urgency',this)">Closing Soonest</button>
+  <button class="so" onclick="ss('state',this)">State</button>
+  <button class="so" onclick="ss('org',this)">PHN</button>
+  <span class="rc" id="rcnt">Loading…</span>
+</div>
+
+<div class="stats">
+  <div class="sc sb2"><div class="sn" id="s0">—</div><div class="sl2">Open Now</div></div>
+  <div class="sc sg"><div class="sn" id="s1">—</div><div class="sl2">Gen. Practice</div></div>
+  <div class="sc st"><div class="sn" id="s2">—</div><div class="sl2">Mental Health</div></div>
+  <div class="sc so2"><div class="sn" id="s3">—</div><div class="sl2">≤14 Days</div></div>
+  <div class="sc sr2"><div class="sn" id="s4">—</div><div class="sl2">Closed</div></div>
+  <div class="sc sp"><div class="sn" id="s5">0</div><div class="sl2">PHNs Scanned</div></div>
+</div>
+
+<div class="tabs">
+  <div class="tab-row tab-row-1">
+    <button class="tab on" onclick="st('open',this)">📋 Open Tenders</button>
+    <button class="tab" onclick="st('closed',this)">🔒 Closed</button>
+    <button class="tab" onclick="st('federal',this)">🏛 Federal</button>
+    <button class="tab av" onclick="st('avant',this)">⭐ Avant</button>
+    <button class="tab" onclick="st('scan',this)">📡 Scan</button>
+    <button class="tab" onclick="st('portals',this)">🔗 Portals</button>
+  </div>
+
+</div>
+
+<div class="ct">
+
+<!-- OPEN -->
+<div id="tab-open" class="tab-pane">
+  <div class="pw" id="pw">
+    <div class="pt"><span class="ptl"><span class="spin">⟳</span> Fetching 31 PHN websites…</span><span style="font-size:12px;color:var(--muted);font-weight:600" id="pp">0%</span></div>
+    <div class="pb"><div class="pf" id="pf"></div></div>
+    <div class="plog" id="plog"></div>
+  </div>
+  <div class="sbar inf" id="sb"><div class="sdot"></div><span id="sm">Scanning all 31 PHNs via <strong>australiantenders.com.au</strong> — public issuer pages, no login needed. Fetching open tenders + all closed within 12 months. Pre-loaded tenders shown below while scan runs.</span></div>
+  <div id="lsec" class="hidden">
+    <div class="dv dv-live">🌐 Live — fetched directly from PHN websites · <span id="fd"></span></div>
+    <div class="grid" id="lc"></div>
+  </div>
+  <div id="bsec">
+    <div class="dv dv-base">📋 Pre-loaded verified tenders — 16 Mar 2026</div>
+    <div class="grid" id="bc"></div>
+  </div>
+</div>
+
+<!-- CLOSED -->
+<div id="tab-closed" class="tab-pane" style="display:none">
+  <div class="clbx">🔒 <strong>Closed within the last 12 months</strong> — window rolls forward in real-time. Sourced from australiantenders.com.au (live scan, every 4h) plus pre-loaded verified entries. The <em>cutoff date updates automatically</em> with each refresh — if you opened this a year from now, it would show that year's closures. Click any card to view the full tender on australiantenders.com.au.</div>
+  <div class="grid" id="cc"></div>
+</div>
+
+<!-- AVANT -->
+<div id="tab-avant" class="tab-pane" style="display:none">
+  <div class="avh">
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px">
+      <div style="background:#fff;border-radius:5px;padding:3px 9px"><div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:800;color:var(--navy)">Avant</div><div style="font-size:8px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.1em">Practice Solutions</div></div>
+      <span style="color:rgba(255,255,255,.55);font-size:11px">Consulting Opportunities Tracker</span>
+    </div>
+    <h2>&#11088; Avant Practice Solutions — Consulting Opportunities</h2>
+    <p>Only opportunities where Avant applies as a <strong>consulting or support organisation</strong> — not as a clinical or service delivery provider. All opportunities here are for practice management, capacity building, evaluation, QI, workforce support or system design. Excludes any tender requiring clinical staff, GP services, nursing or allied health treatment delivery.</p>
+  </div>
+
+  <div class="avs">
+    <div class="avst">&#127942; Tier 1 — Direct consulting tenders open now <span class="atg atg-d">Apply</span></div>
+    <div class="avc td" onclick="window.open('https://nwmphn.org.au/our-work/commissioning/current-tenders-and-eois/','_blank')">
+      <div style="display:flex;justify-content:space-between;gap:11px;margin-bottom:6px"><div><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Health Systems &amp; Capacity Building Tenders A &amp; B</div><div style="font-size:12px;color:var(--blue);font-weight:600;margin-top:2px">North Western Melbourne PHN</div></div><span class="cb cn">Closes 30 Jun 2026</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Two capacity building commissioning tenders — likely practice support, QI, systems integration and organisational capacity building. No clinical delivery required.</div>
+      <div class="cwy">&#127942; Register portal.tenderlink.com/mpcn and download the scope. Strong consulting fit if it covers practice management or systems capacity building.</div>
+      <div style="display:flex;gap:4px;margin-top:7px;flex-wrap:wrap"><span class="pill pp">Capacity Building</span><span class="pill ps">&#128205; VIC</span><span class="cb cn" style="font-size:11px">30 Jun 2026</span><span class="wscore ws-hi" style="margin-left:auto">&#11088; 82% fit</span></div>
+    </div>
+    <div class="avc td" onclick="window.open('https://www.grants.gov.au/Go/Show?GoUuid=e766d4bd-7e28-41ad-a5c5-b67091200253','_blank')">
+      <div style="display:flex;justify-content:space-between;gap:11px;margin-bottom:6px"><div><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">GPIF Service System Recovery Plan — Design &amp; Implementation Partner</div><div style="font-size:12px;color:var(--blue);font-weight:600;margin-top:2px">Multiple PHNs · DoHAC $46.2M · Ongoing</div></div><span class="cb co">Ongoing</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">PHNs develop Service System Recovery Plans with local stakeholders to access GPIF funding. SSRP design, facilitation and implementation is pure consulting work — no clinical delivery.</div>
+      <div class="cwy">&#127942; Approach each PHN commissioning lead directly to be embedded as their SSRP co-design and implementation partner. Highest-value consulting engagement type — not publicly tendered.</div>
+      <div style="display:flex;gap:4px;margin-top:7px;flex-wrap:wrap"><span class="pill pp">Strategy / System Design</span><span class="pill ps">&#128205; All PHNs</span><span class="wscore ws-hi" style="margin-left:auto">&#11088; 90% fit</span></div>
+    </div>
+    <div class="avc td" onclick="window.open('https://www.australiantenders.com.au/issuer/5443/tenders/north-western-melbourne-phn','_blank')">
+      <div style="display:flex;justify-content:space-between;gap:11px;margin-bottom:6px"><div><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Primary Care Access for Overseas-Born Residents — RFP (expected)</div><div style="font-size:12px;color:var(--blue);font-weight:600;margin-top:2px">North Western Melbourne PHN</div></div><span class="cb cs">Watch Q2 2026</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">RFI closed Dec 2025. Full commissioning round expected Q1-Q2 2026. Service design and coordination role for improving primary care access for residents born overseas — no clinical delivery.</div>
+      <div class="cwy">&#127942; Watch NWMPHN TenderLink for the RFP release. Avant can apply as program design and practice coordination provider.</div>
+      <div style="display:flex;gap:4px;margin-top:7px;flex-wrap:wrap"><span class="pill pp">Program Design</span><span class="pill ps">&#128205; VIC</span><span class="wscore ws-hi" style="margin-left:auto">&#11088; 76% fit</span></div>
+    </div>
+    <div class="avc td" onclick="window.open('https://www.grants.gov.au/Go/Show?GoUuid=f619fb11-f972-4307-9b03-f13a531db25e','_blank')">
+      <div style="display:flex;justify-content:space-between;gap:11px;margin-bottom:6px"><div><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Home Care Workforce — Regional &amp; Rural (GO7297)</div><div style="font-size:12px;color:var(--blue);font-weight:600;margin-top:2px">DoHAC · Consultancies explicitly eligible · MMM 3-7</div></div><span class="cb cn">Open</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">DoHAC grant building home care workforce in MMM 3-7. Eligibility explicitly lists "consultancy/business advice firm providing advice to the care and support sectors." Apply to deliver in SA3 regions in Avant's footprint.</div>
+      <div class="cwy">&#11088; <strong>Consultancies explicitly named as eligible</strong> — rare direct federal grant opportunity for Avant. Apply via grants.gov.au GO7297.</div>
+      <div style="display:flex;gap:4px;margin-top:7px;flex-wrap:wrap"><span class="pill pm">Workforce Consulting</span><span class="pill ps">&#128205; MMM 3-7</span><span class="wscore ws-hi" style="margin-left:auto">&#11088; 85% fit</span></div>
+    </div>
+  </div>
+
+  <div class="avs">
+    <div class="avst">&#128101; Panel &amp; preferred supplier plays <span class="atg atg-cl">Highest ROI</span></div>
+    <div class="avc" style="border-left:4px solid var(--gold)">
+      <div style="display:flex;justify-content:space-between;gap:11px;margin-bottom:6px"><div><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">SAVI / Practice Support Panels — All 31 PHNs</div><div style="font-size:12px;color:var(--blue);font-weight:600;margin-top:2px">Not publicly tendered — relationship-based</div></div><span class="cb co">Ongoing</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">PHNs commission practice sustainability assessments, practice recovery plans and capacity building directly to preferred consulting suppliers — often without open tender. HNECC is the most active. Brisbane South, Adelaide and SEMPHN expanding similar models. Rates: $1,500-$4,000/day.</div>
+      <div class="cwy">&#128101; Contact each PHN's Practice Support lead directly. Request SAVI panel inclusion or preferred consulting supplier status. This is the single highest-value pipeline activity for Avant.</div>
+      <div style="display:flex;gap:4px;margin-top:7px;flex-wrap:wrap"><span class="pill pp">SAVI / Consulting</span><span class="pill ps">&#128205; National</span><span class="wscore ws-hi" style="margin-left:auto">&#11088; 95% fit</span></div>
+    </div>
+    <div class="avc" style="border-left:4px solid var(--gold)">
+      <div style="display:flex;justify-content:space-between;gap:11px;margin-bottom:6px"><div><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">PHN Accreditation Support — Preferred Referral Partner</div><div style="font-size:12px;color:var(--blue);font-weight:600;margin-top:2px">HNECC, Gold Coast, Murrumbidgee, WAPHA PHNs</div></div><span class="cb co">Ongoing</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">PHNs refer practices needing AGPAL/QPA accreditation support to preferred consulting partners. Not tendered — purely relationship-based. PHNs include preferred partners in new practice onboarding packs and GP newsletters.</div>
+      <div class="cwy">&#128101; Contact Practice Support managers at each PHN to establish Avant as the go-to accreditation consulting referral. Ask to be listed in their provider directory.</div>
+      <div style="display:flex;gap:4px;margin-top:7px;flex-wrap:wrap"><span class="pill pp">Accreditation Consulting</span><span class="pill ps">&#128205; National</span><span class="wscore ws-hi" style="margin-left:auto">&#11088; 95% fit</span></div>
+    </div>
+  </div>
+
+  <div class="avs">
+    <div class="avst">&#129504; Action Plan</div>
+    <div class="itl"><h4>&#128203; Immediate — next 30 days</h4><ul>
+      <li><strong>HNC TenderLink:</strong> ncphn.org.au/funding-and-tenders &#8594; download "General Practice Support" RFP — purest consulting tender currently open</li>
+      <li><strong>NWMPHN:</strong> portal.tenderlink.com/mpcn &#8594; download Health Systems &amp; Capacity Building scope (closes 30 Jun 2026)</li>
+      <li><strong>Home Care Workforce GO7297:</strong> grants.gov.au &#8594; apply as eligible consultancy in MMM 3-7 SA3 regions</li>
+      <li><strong>RWAV 1 Apr:</strong> Alert Victorian rural clients about Business Practice Training Grant re-opening</li>
+    </ul></div>
+    <div class="itl"><h4>&#128161; How to identify consulting vs. delivery tenders</h4><ul>
+      <li><strong>Consulting signals:</strong> "capacity building", "practice support", "evaluation", "QI", "system design", "workforce support", "program coordination", "planning", "consulting"</li>
+      <li><strong>Delivery signals (skip):</strong> "service delivery", "clinical services", "psychological therapies", "treatment", "nursing", "GP services", "allied health treatment"</li>
+      <li><strong>Check the eligibility:</strong> If it says "registered health professional" or "approved provider" in eligibility criteria — it is clinical delivery, not consulting</li>
+    </ul></div>
+  </div>
+
+</div>
+
+<div id="tab-scan" class="tab-pane" style="display:none">
+  <div class="sbar" style="margin-bottom:9px"><div class="sdot"></div><span>Each tile fetches that PHN's issuer page on <strong>australiantenders.com.au</strong>. Click any tile to view it directly. Green = tenders found. Closed tenders within 12 months of the scan date are captured automatically.</span></div>
+  <div class="sg" id="sgrid"></div>
+</div>
+
+<!-- PORTALS -->
+<div id="tab-portals" class="tab-pane" style="display:none">
+  <div class="sbar inf" style="margin-bottom:8px"><div class="sdot"></div><span>All 31 PHN commissioning pages. Register free at <strong>TenderLink</strong> and <strong>australiantenders.com.au</strong> for email alerts.</span></div>
+  <div class="plh">🌐 National Aggregators</div>
+  <a class="pl" href="https://www.australiantenders.com.au/search/tenders?s=primary+health+network" target="_blank"><span>📋</span><div><div class="plb">australiantenders.com.au — PHN Search</div><div class="pld">Aggregated national tender database</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://illion.tenderlink.com" target="_blank"><span>🔗</span><div><div class="plb">TenderLink (illion)</div><div class="pld">Free registration · Email alerts from all PHNs</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.tenders.gov.au" target="_blank"><span>🏛</span><div><div class="plb">AusTender</div><div class="pld">Federal health tenders & PHN program funding</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <div class="plh">🟦 NSW (10 PHNs)</div>
+  <a class="pl" href="https://www.cesphn.org.au/commissioning/opportunities" target="_blank"><span>🌆</span><div><div class="plb">Central & Eastern Sydney PHN</div><div class="pld">cesphn.org.au/commissioning/opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://snhn.org.au/commissioning-opportunities/" target="_blank"><span>🏙</span><div><div class="plb">Northern Sydney PHN</div><div class="pld">snhn.org.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.wsphn.org.au/commissioning/commissioning-opportunities/" target="_blank"><span>🏡</span><div><div class="plb">Western Sydney PHN (WentWest)</div><div class="pld">wsphn.org.au/commissioning/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://nbmphn.com.au/what-we-do/commissioning/commissioning-opportunities/" target="_blank"><span>🌄</span><div><div class="plb">Nepean Blue Mountains PHN</div><div class="pld">nbmphn.com.au/what-we-do/commissioning/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.swsphn.com.au/opportunities/" target="_blank"><span>🏢</span><div><div class="plb">South Western Sydney PHN</div><div class="pld">swsphn.com.au/opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.chnswphn.com.au/commissioning/commissioning-opportunities" target="_blank"><span>🏔</span><div><div class="plb">South Eastern NSW PHN</div><div class="pld">chnswphn.com.au/commissioning/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.wnswphn.org.au/commissioning/tenders/" target="_blank"><span>🌾</span><div><div class="plb">Western NSW PHN</div><div class="pld">wnswphn.org.au/commissioning/tenders</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.hneccphn.com.au/commissioning-opportunities/" target="_blank"><span>🏞</span><div><div class="plb">Hunter New England & Central Coast PHN (HNECC)</div><div class="pld">hneccphn.com.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://ncphn.org.au/funding-and-tenders/" target="_blank"><span>🌿</span><div><div class="plb">North Coast PHN (Healthy North Coast)</div><div class="pld">ncphn.org.au/funding-and-tenders</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.mphn.org.au/commissioning-opportunities/" target="_blank"><span>🌊</span><div><div class="plb">Murrumbidgee PHN</div><div class="pld">mphn.org.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <div class="plh">🟩 VIC (6 PHNs)</div>
+  <a class="pl" href="https://nwmphn.org.au/our-work/commissioning/current-tenders-and-eois/" target="_blank"><span>🏙</span><div><div class="plb">North Western Melbourne PHN</div><div class="pld">nwmphn.org.au/our-work/commissioning/current-tenders-and-eois</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://emphn.org.au/commissioning/commissioning-opportunities/" target="_blank"><span>🏘</span><div><div class="plb">Eastern Melbourne PHN</div><div class="pld">emphn.org.au/commissioning/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.semphn.org.au/commissioning-opportunities" target="_blank"><span>🌃</span><div><div class="plb">South Eastern Melbourne PHN</div><div class="pld">semphn.org.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://gphn.org.au/procurement-and-tendering/commissioning-opportunities/" target="_blank"><span>🌳</span><div><div class="plb">Gippsland PHN</div><div class="pld">gphn.org.au/procurement-and-tendering/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.murrayphn.org.au/commissioning-opportunities/" target="_blank"><span>💧</span><div><div class="plb">Murray PHN</div><div class="pld">murrayphn.org.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://westvicphn.com.au/commissioning-opportunities/" target="_blank"><span>🌲</span><div><div class="plb">Western Victoria PHN</div><div class="pld">westvicphn.com.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <div class="plh">🟨 QLD (7 PHNs)</div>
+  <a class="pl" href="https://www.brisbanenorthphn.org.au/about-us/tenders-and-contracts/" target="_blank"><span>🌴</span><div><div class="plb">Brisbane North PHN</div><div class="pld">brisbanenorthphn.org.au/about-us/tenders-and-contracts</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://bsphn.org.au/about/procurement-opportunities/" target="_blank"><span>☀️</span><div><div class="plb">Brisbane South PHN</div><div class="pld">bsphn.org.au/about/procurement-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://gcphn.org.au/commissioning/commissioning-opportunities/" target="_blank"><span>🏄</span><div><div class="plb">Gold Coast PHN</div><div class="pld">gcphn.org.au/commissioning/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://ddwmphn.com.au/commissioning/commissioning-opportunities/" target="_blank"><span>🌵</span><div><div class="plb">Darling Downs & West Moreton PHN</div><div class="pld">ddwmphn.com.au/commissioning/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://wqphn.com.au/commissioning-opportunities/" target="_blank"><span>🌅</span><div><div class="plb">Western Queensland PHN</div><div class="pld">wqphn.com.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.cqwbscphn.com.au/commissioning-opportunities/" target="_blank"><span>☁️</span><div><div class="plb">Central QLD Wide Bay Sunshine Coast PHN</div><div class="pld">cqwbscphn.com.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://nqphn.com.au/commissioning-opportunities/" target="_blank"><span>🦅</span><div><div class="plb">Northern Queensland PHN</div><div class="pld">nqphn.com.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <div class="plh">🟥 SA · 🟪 WA · 🔵 TAS / ACT / NT</div>
+  <a class="pl" href="https://adelaidephn.com.au/commissioning/commissioning-opportunities/" target="_blank"><span>🌻</span><div><div class="plb">Adelaide PHN</div><div class="pld">adelaidephn.com.au/commissioning/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://countrysaphn.com.au/commissioning-opportunities/" target="_blank"><span>🌾</span><div><div class="plb">Country SA PHN</div><div class="pld">countrysaphn.com.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.pnphn.org.au/commissioning-opportunities/" target="_blank"><span>🌊</span><div><div class="plb">Perth North PHN</div><div class="pld">pnphn.org.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.psphn.org.au/commissioning-opportunities/" target="_blank"><span>🌆</span><div><div class="plb">Perth South PHN</div><div class="pld">psphn.org.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.wapha.org.au/about-us/commissioning-opportunities/" target="_blank"><span>🏜</span><div><div class="plb">WA Primary Health Alliance (Country & SW PHNs)</div><div class="pld">wapha.org.au/about-us/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://www.primaryhealthtas.com.au/commissioning-opportunities/" target="_blank"><span>🌿</span><div><div class="plb">Primary Health Tasmania</div><div class="pld">primaryhealthtas.com.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://chnact.org.au/commissioning-opportunities/" target="_blank"><span>🏛</span><div><div class="plb">Capital Health Network (ACT PHN)</div><div class="pld">chnact.org.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+  <a class="pl" href="https://ntphn.org.au/commissioning-opportunities" target="_blank"><span>🦘</span><div><div class="plb">Northern Territory PHN</div><div class="pld">ntphn.org.au/commissioning-opportunities</div></div><span style="margin-left:auto;color:var(--dim)">↗</span></a>
+</div>
+
+<!-- FEDERAL GRANTS TAB -->
+<div id="tab-federal" class="tab-pane" style="display:none">
+  <div class="fed-hero">
+    <h2>&#127963; Federal Grant Opportunities</h2>
+    <p style="font-size:12px;color:rgba(255,255,255,.65);line-height:1.7;margin-top:4px">Current and forecasted DoHAC programs only. Closed grants removed. Click any card to view on GrantConnect.</p>
+  </div>
+
+  <div class="fed-sec">
+    <div class="fed-sec-title">&#129657; Primary Care &amp; General Practice</div>
+    <div class="fed-card fc-ongoing" onclick="window.open('https://www.grants.gov.au/Go/Show?GoUuid=e766d4bd-7e28-41ad-a5c5-b67091200253','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">PHN Program — General Practice Incentive Fund (GPIF) — GO7926</div><span class="fed-tag ft-ongoing">Ongoing</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">$46.2M national. PHNs develop Service System Recovery Plans (SSRPs) to access GPIF. SSRP co-design and implementation is a direct consulting opportunity for Avant with each PHN.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pp">Practice Support</span><span class="pill ps">All PHNs</span><span class="pill pg">&#11088; High Avant fit</span></div>
+    </div>
+    <div class="fed-card fc-ongoing" onclick="window.open('https://www.servicesaustralia.gov.au/practice-incentives-program','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">GP in Aged Care Incentive (GPACI) — $88.2M National</div><span class="fed-tag ft-ongoing">Ongoing via PHNs</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">PHN-administered incentives for GPs visiting aged care facilities. Avant can assist practices with GPACI enrolment, compliance and governance setup.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pp">GP / Aged Care</span><span class="pill ps">All PHNs</span><span class="pill pg">&#11088; High Avant fit</span></div>
+    </div>
+    <div class="fed-card fc-ongoing" onclick="window.open('https://www.servicesaustralia.gov.au/practice-incentives-program','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Bulk Billing Practice Incentive Program (BBPIP)</div><span class="fed-tag ft-ongoing">Ongoing</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Ongoing incentive for practices to bulk bill. Avant can help practices model MBS revenue impact, implement billing workflows and meet BBPIP compliance requirements.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pp">Practice Management</span><span class="pill ps">All Practices</span></div>
+    </div>
+    <div class="fed-card fc-ongoing" onclick="window.open('https://www.grants.gov.au/Go/Show?GoUuid=73f75ea8-6962-4aa5-b6f7-3b0a9a3f6e1a','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">PHN Allied Health Practice Support Toolkit — GO6598</div><span class="fed-tag ft-ongoing">Active 2023-27</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">$79.4M HNECC-led program funding MDT care models across PHN regions. Source of most current MDT/allied health tenders. Watch for re-commissioning rounds in 2026-27.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pp">MDT / Allied Health</span><span class="pill ps">All PHNs</span><span class="pill pg">&#11088; High Avant fit</span></div>
+    </div>
+  </div>
+
+  <div class="fed-sec">
+    <div class="fed-sec-title">&#129504; Mental Health</div>
+    <div class="fed-card fc-ongoing" onclick="window.open('https://www.health.gov.au/our-work/medicare-mental-health-centres','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Medicare Mental Health Centres (Head to Health) — National Expansion</div><span class="fed-tag ft-ongoing">Rolling PHN commissioning</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">PHNs continue commissioning new Medicare Mental Health Centre operators in 2026. Avant can support practices establishing co-located mental health services.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pm">Mental Health</span><span class="pill ps">All PHNs</span></div>
+    </div>
+    <div class="fed-card fc-ongoing" onclick="window.open('https://www.health.gov.au/our-work/universal-aftercare','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Universal Aftercare — $121.3M Federal/State Bilateral</div><span class="fed-tag ft-ongoing">Active — PHN commissioning 2026</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Bilateral NSW/Federal investment for suicide aftercare. Multiple PHNs still commissioning delivery organisations. Watch HNECC, SWSPHN and WNSWPHN issuer pages for active RFTs.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pm">Suicide Prevention</span><span class="pill ps">NSW PHNs</span></div>
+    </div>
+    <div class="fed-card fc-ongoing" onclick="window.open('https://www.health.gov.au/our-work/phn-mental-health','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">PHN Primary Mental Health Care — Core Flexible Funding</div><span class="fed-tag ft-ongoing">Ongoing base funding</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Base federal funding driving the majority of PHN mental health commissioning. Source of most MH tenders on australiantenders.com.au including stepped care, psychological therapies and low intensity services.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pm">Mental Health</span><span class="pill ps">All PHNs</span></div>
+    </div>
+  </div>
+
+  <div class="fed-sec">
+    <div class="fed-sec-title">&#129493; Aged Care</div>
+    <div class="fed-card fc-open" onclick="window.open('https://www.grants.gov.au/Go/Show?GoUuid=4dc80aa1-c2e1-470e-9b3a-7f2e8d5c3a1b','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Specialist Dementia Care Program (SDCP) Phase 2 — GO5304</div><span class="fed-tag ft-open">Open — closes 30 Jun 2026</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">35 new SDCP units across PHN regions. Aged care providers can apply. Avant can support eligible providers with application design, governance and PHN partnership development.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pa">Aged Care</span><span class="pill ps">PHN regions</span><span class="pill pg">Closes 30 Jun 2026</span></div>
+    </div>
+    <div class="fed-card fc-ongoing" onclick="window.open('https://www.health.gov.au/our-work/chsp','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Commonwealth Home Support Programme (CHSP) 2025-2027 Extension</div><span class="fed-tag ft-ongoing">Active — transitioning to Support at Home</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">CHSP extended through 2027. Avant can assist CHSP providers in PHN regions with compliance, accreditation and Support at Home transition planning.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pa">Aged Care</span><span class="pill ps">All regions</span></div>
+    </div>
+    <div class="fed-card fc-watch" onclick="window.open('https://www.health.gov.au/our-work/support-at-home','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Support at Home Thin Markets Grants — Round 3 (forecast)</div><span class="fed-tag ft-watch">Round 2 closed Jan 2026 — Round 3 ~mid-2026</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">$100M round 2 closed January 2026. Round 3 expected mid-2026 when Support at Home launches. Avant can help eligible providers in MMM 3-7 prepare applications.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pa">Aged Care</span><span class="pill ps">MMM 3-7</span><span class="pill" style="background:rgba(245,166,35,.1);border:1.5px solid rgba(245,166,35,.3);color:#8a5f00">Round 3 ~mid-2026</span></div>
+    </div>
+  </div>
+
+  <div class="fed-sec">
+    <div class="fed-sec-title">&#128101; Workforce</div>
+    <div class="fed-card fc-ongoing" onclick="window.open('https://www.grants.gov.au/Go/Show?GoUuid=d810e45e-2b83-4cac-9f1a-5e3b2c8a7d4f','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Rural Locum Assistance Program (RLAP) — GO8259</div><span class="fed-tag ft-ongoing">Ongoing — MM 2-7</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Ongoing locum support for rural and remote practices. Avant can help rural practices navigate RLAP entitlements and workforce planning.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pp">Rural Workforce</span><span class="pill ps">MM 2-7</span></div>
+    </div>
+    <div class="fed-card fc-open" onclick="window.open('https://rwav.com.au/grants-page/','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Business Practice Training Grant — Rural Practices (VIC)</div><span class="fed-tag ft-open">Open — re-opened Apr 2026</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">DoHAC via RWAV. Subsidises rural practice managers in MMM 3-7 to complete business management training. Avant practice management programs may qualify as funded activities.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pp">Practice Management</span><span class="pill ps">VIC MMM 3-7</span><span class="pill pg">&#11088; High Avant fit</span></div>
+    </div>
+    <div class="fed-card fc-ongoing" onclick="window.open('https://www.health.gov.au/our-work/primary-care-nursing-midwifery-scholarships','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Primary Care Nursing &amp; Midwifery Scholarship Program</div><span class="fed-tag ft-ongoing">Active 2023-27</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">$49.4M — 1,850 scholarships for nurses in primary care. PHNs administer locally. Avant can assist practices supporting staff scholarship applications and workforce planning.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pm">Nursing Workforce</span><span class="pill ps">All PHNs</span></div>
+    </div>
+    <div class="fed-card fc-watch" onclick="window.open('https://www.grants.gov.au/go/list','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Home Care Workforce Regional &amp; Rural (GO7297) — Next Round</div><span class="fed-tag ft-watch">Closed Jan 2026 — Round 2 forecast mid-2026</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Round 1 closed January 2026. Program runs to 2026-27 with further rounds anticipated. Consultancies were explicitly eligible. Watch GrantConnect for Round 2 — Avant should prepare readiness materials now.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pp">Workforce Consulting</span><span class="pill ps">MMM 3-7</span><span class="pill pg">&#11088; High Avant fit</span></div>
+    </div>
+  </div>
+
+  <div class="fed-sec">
+    <div class="fed-sec-title">&#127775; Specialist &amp; Other</div>
+    <div class="fed-card fc-watch" onclick="window.open('https://www.health.gov.au/our-work/endometriosis-pelvic-pain-clinics','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">Endometriosis &amp; Pelvic Pain Clinics — $19.6M Expansion</div><span class="fed-tag ft-watch">Watch — further PHN commissioning expected</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">11 new clinics commissioned through PHNs. Further expansion rounds expected. Avant can support GP practices establishing co-located services and PHN partnership arrangements.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pu">Women's Health</span><span class="pill ps">Selected PHNs</span></div>
+    </div>
+    <div class="fed-card fc-open" onclick="window.open('https://www.grants.gov.au/Go/Show?GoUuid=413898b2-4024-4f0b-b3aa-104821ab9c7b','_blank')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px"><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)">LGBTIQA+ Inclusive Primary Care Workforce Training — GO8236</div><span class="fed-tag ft-open">Open — closes 30 Mar 2026</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Funds workforce training and accreditation for culturally safe, inclusive primary care. Consortia strongly encouraged. Avant can support practices seeking accreditation and training delivery partnerships.</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px"><span class="pill pp">Workforce Training</span><span class="pill ps">National</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+
+const PHNS=[
+  {id:'cesphn', name:'Central & Eastern Sydney PHN',  state:'NSW', atSlug:'central-and-eastern-sydney-phn',        atId:1835, phnUrl:'https://www.cesphn.org.au/commissioning/opportunities'},
+  {id:'snhn',   name:'Northern Sydney PHN',            state:'NSW', atSlug:'sydney-north-phn',                      atId:7381, phnUrl:'https://snhn.org.au/commissioning-opportunities/'},
+  {id:'wsphn',  name:'Western Sydney PHN (WentWest)',  state:'NSW', atSlug:'western-sydney-primary-health-network-(wsphn)', atId:8350, phnUrl:'https://www.wsphn.org.au/commissioning/commissioning-opportunities/'},
+  {id:'nbmphn', name:'Nepean Blue Mountains PHN',      state:'NSW', atSlug:'nepean-blue-mountains-phn',             atId:6243, phnUrl:'https://nbmphn.com.au/what-we-do/commissioning/commissioning-opportunities/'},
+  {id:'swsphn', name:'South Western Sydney PHN',       state:'NSW', atSlug:'south-western-sydney-phn',              atId:10685,phnUrl:'https://www.swsphn.com.au/commissioning/tenders-and-eois/'},
+  {id:'senphn', name:'South Eastern NSW PHN',          state:'NSW', atSlug:'coordinare-south-eastern-nsw-phn',      atId:1828, phnUrl:'https://www.chnswphn.com.au/commissioning/commissioning-opportunities'},
+  {id:'wnswphn',name:'Western NSW PHN',                state:'NSW', atSlug:'western-nsw-phn',                       atId:8351, phnUrl:'https://www.wnswphn.org.au/commissioning/tenders/'},
+  {id:'hnecc',  name:'Hunter New England & CC PHN',    state:'NSW', atSlug:'hunter-new-england-central-coast-phn-(hnecc-ltd)', atId:3760, phnUrl:'https://www.hneccphn.com.au/commissioning-opportunities/'},
+  {id:'ncphn',  name:'North Coast PHN (HNC)',          state:'NSW', atSlug:'healthy-north-coast',                   atId:3285, phnUrl:'https://ncphn.org.au/funding-and-tenders/'},
+  {id:'mphn',   name:'Murrumbidgee PHN',               state:'NSW', atSlug:'murrumbidgee-primary-health-network',   atId:5797, phnUrl:'https://www.mphn.org.au/commissioning-opportunities/'},
+  {id:'nwmphn', name:'North Western Melbourne PHN',    state:'VIC', atSlug:'north-western-melbourne-phn',           atId:5443, phnUrl:'https://nwmphn.org.au/our-work/commissioning/current-tenders-and-eois/'},
+  {id:'emphn',  name:'Eastern Melbourne PHN',          state:'VIC', atSlug:'eastern-melbourne-phn',                 atId:2702, phnUrl:'https://emphn.org.au/commissioning/commissioning-opportunities/'},
+  {id:'semphn', name:'South Eastern Melbourne PHN',    state:'VIC', atSlug:'south-eastern-melbourne-phn',           atId:7380, phnUrl:'https://www.semphn.org.au/commissioning-opportunities'},
+  {id:'gphn',   name:'Gippsland PHN',                  state:'VIC', atSlug:'gippsland-phn',                         atId:3051, phnUrl:'https://gphn.org.au/procurement-and-tendering/commissioning-opportunities/'},
+  {id:'murray', name:'Murray PHN',                     state:'VIC', atSlug:'murray-phn',                            atId:5800, phnUrl:'https://www.murrayphn.org.au/commissioning-opportunities/'},
+  {id:'westvic',name:'Western Victoria PHN',           state:'VIC', atSlug:'western-victoria-phn',                  atId:8352, phnUrl:'https://westvicphn.com.au/commissioning-opportunities/'},
+  {id:'bnphn',  name:'Brisbane North PHN',             state:'QLD', atSlug:'brisbane-north-phn',                    atId:10806,phnUrl:'https://www.brisbanenorthphn.org.au/about-us/tenders-and-contracts/'},
+  {id:'bsphn',  name:'Brisbane South PHN',             state:'QLD', atSlug:'brisbane-south-phn',                    atId:832,  phnUrl:'https://bsphn.org.au/about/procurement-opportunities/'},
+  {id:'gcphn',  name:'Gold Coast PHN',                 state:'QLD', atSlug:'gold-coast-phn',                        atId:3054, phnUrl:'https://gcphn.org.au/commissioning/commissioning-opportunities/'},
+  {id:'ddwmphn',name:'Darling Downs & West Moreton PHN',state:'QLD',atSlug:'darling-downs-and-west-moreton-phn',    atId:1834, phnUrl:'https://ddwmphn.com.au/commissioning/commissioning-opportunities/'},
+  {id:'wqphn',  name:'Western Queensland PHN',         state:'QLD', atSlug:'western-queensland-phn',                atId:8353, phnUrl:'https://wqphn.com.au/commissioning-opportunities/'},
+  {id:'cqwbsc', name:'Central QLD Wide Bay SC PHN',    state:'QLD', atSlug:'central-queensland-wide-bay-sunshine-coast-phn', atId:1434, phnUrl:'https://www.cqwbscphn.com.au/commissioning-opportunities/'},
+  {id:'nqphn',  name:'Northern Queensland PHN',        state:'QLD', atSlug:'northern-queensland-phn',               atId:5953, phnUrl:'https://nqphn.com.au/commissioning-opportunities/'},
+  {id:'aphn',   name:'Adelaide PHN',                   state:'SA',  atSlug:'adelaide-phn',                          atId:68,   phnUrl:'https://adelaidephn.com.au/commissioning/commissioning-opportunities/'},
+  {id:'csaphn', name:'Country SA PHN',                 state:'SA',  atSlug:'country-sa-phn',                        atId:1833, phnUrl:'https://countrysaphn.com.au/commissioning-opportunities/'},
+  {id:'pnphn',  name:'Perth North PHN',                state:'WA',  atSlug:'perth-north-phn',                       atId:6800, phnUrl:'https://www.pnphn.org.au/commissioning-opportunities/'},
+  {id:'psphn',  name:'Perth South PHN',                state:'WA',  atSlug:'perth-south-phn',                       atId:6801, phnUrl:'https://www.psphn.org.au/commissioning-opportunities/'},
+  {id:'wapha',  name:'WA Primary Health Alliance',     state:'WA',  atSlug:'wa-primary-health-alliance',            atId:8354, phnUrl:'https://www.wapha.org.au/about-us/commissioning-opportunities/'},
+  {id:'phtas',  name:'Primary Health Tasmania',        state:'TAS', atSlug:'primary-health-tasmania',               atId:6802, phnUrl:'https://www.primaryhealthtas.com.au/commissioning-opportunities/'},
+  {id:'chn',    name:'Capital Health Network (ACT)',   state:'ACT', atSlug:'capital-health-network',                atId:1050, phnUrl:'https://chnact.org.au/commissioning-opportunities/'},
+  {id:'ntphn',  name:'Northern Territory PHN',         state:'NT',  atSlug:'northern-territory-phn',                atId:5952, phnUrl:'https://ntphn.org.au/commissioning-opportunities'},
+];
+
+// australiantenders.com.au is the primary source — public pages, no CORS, lists both Current and Closed
+function atUrl(p){ return `https://www.australiantenders.com.au/issuer/${p.atId}/tenders/${p.atSlug}`; }
+
+// Fallback CORS proxy for PHN direct pages
+const PROXIES=[
+  u=>`https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
+  u=>`https://corsproxy.io/?${encodeURIComponent(u)}`,
+];
+
+const MONTHS_L={january:1,february:2,march:3,april:4,may:5,june:6,july:7,august:8,september:9,october:10,november:11,december:12};
+const MONTHS_S={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+
+const TODAY=new Date(); TODAY.setHours(0,0,0,0); // Always today's real date — no hardcoding
+let live=[],closedLive=[],phnSt={},activeF='all',activeS='urgency';
+let refreshTimer=null,cdTimer=null,nextAt=null;
+const RI=4*60*60*1000;
+
+// Date utils
+function dl(ds){if(!ds)return null;return Math.ceil((new Date(ds)-TODAY)/86400000);}
+function urg(t){const d=dl(t.closeDate);if(d===null)return'ongoing';if(d<0)return'closed';if(d<=14)return'urgent';if(d<=42)return'soon';return'normal';}
+function sc2(t){const u=urg(t),d=dl(t.closeDate);return({urgent:0,soon:1,normal:2,ongoing:3,closed:99}[u]||3)*100000+(d==null?9999:Math.max(d,0));}
+function cbcl(t){return({urgent:'cu',soon:'cs',normal:'cn',ongoing:'co',closed:'cu'})[urg(t)]||'co';}
+function dtag(t){const d=dl(t.closeDate);if(d===null)return'';if(d<0)return`<div class="dt" style="color:var(--red)">CLOSED</div>`;if(d===0)return`<div class="dt" style="color:var(--red)">TODAY</div>`;const c=d<=14?'var(--red)':d<=42?'#c67b00':'var(--muted)';return`<div class="dt" style="color:${c}">${d}d left</div>`;}
+
+const TL={gp:'General Practice',phn:'PHN Service',specialist:'Specialist',mental_health:'Mental Health',allied:'Allied Health'};
+const TP={gp:'pg',phn:'pp',specialist:'pu',mental_health:'pm',allied:'pa'};
+const TC={gp:'c-gp',phn:'c-phn',specialist:'c-sp',mental_health:'c-mh',allied:'c-al'};
+
+// ── WIN PROBABILITY SCORE ────────────────────────────────────────────────
+// Scores each tender 0-100 based on fit to Avant Practice Solutions:
+// consulting org, practice management, QI, GP support, non-clinical delivery
+const WIN_RULES = [
+  // Strong positives
+  {re:/practice (management|support|improvement|advisory)|practice manager|gp support|qI|quality improvement|accreditation|billing|bookkeep|payroll|HR advisory/i, score:+35},
+  {re:/capacity building|workforce support|coaching|training|education|upskill/i, score:+25},
+  {re:/MDT|multidisciplinary|care coordination|care navigator|link worker/i, score:+20},
+  {re:/general practice|GP grant|gp practice|primary care (support|improvement)/i, score:+20},
+  {re:/evaluation|research|planning|strategy|needs assessment|health needs/i, score:+15},
+  {re:/digital health|telehealth|data|reporting|analytics|records/i, score:+12},
+  {re:/healthy towns|place.based|community health planning/i, score:+18},
+  // Negatives — clinical delivery Avant can't do
+  {re:/clinical (delivery|services|treatment|therapy|psycholog|counsel)/i, score:-30},
+  {re:/nurse|nursing|GP registrar|medical officer|doctor|practitioner|pharmacist/i, score:-25},
+  {re:/headspace|mental health (centre|treatment|service delivery)/i, score:-20},
+  {re:/aftercare|suicide (prevention service|crisis)|drug.and.alcohol (service|treatment)/i, score:-20},
+  {re:/aged care (facility|home|RACF|service delivery)/i, score:-10},
+  {re:/Aboriginal community controlled|ACCHO|ACCHS/i, score:-15},
+];
+
+function winScore(t){
+  const text=(t.title+' '+(t.desc||'')).toLowerCase();
+  let score=50; // baseline
+  WIN_RULES.forEach(r=>{if(r.re.test(text))score+=r.score;});
+  score=Math.max(5,Math.min(95,score));
+  return score;
+}
+
+function winBadge(t){
+  const s=winScore(t);
+  if(s>=70) return`<span class="wscore ws-hi">⭐ ${s}% fit</span>`;
+  if(s>=45) return`<span class="wscore ws-md">🎯 ${s}% fit</span>`;
+  if(s>=25) return`<span class="wscore ws-lo">~ ${s}% fit</span>`;
+  return`<span class="wscore ws-na">✗ ${s}% fit</span>`;
+}
+
+function e(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function filt(arr){const q=document.getElementById('q').value.toLowerCase();return arr.filter(t=>{const ok=activeF==='all'||t.type===activeF;const sq=!q||[t.title,t.org,t.state,t.desc].some(x=>(x||'').toLowerCase().includes(q));return ok&&sq;});}
+function srt(arr){const a=[...arr];if(activeS==='urgency')a.sort((x,y)=>sc2(x)-sc2(y));else if(activeS==='state')a.sort((x,y)=>(x.state||'').localeCompare(y.state||''));else a.sort((x,y)=>(x.org||'').localeCompare(y.org||''));return a;}
+
+function cardH(t,i,lv){
+  const bc=lv?'c-lv':(TC[t.type]||'c-phn');
+  const stag=lv?`<span class="pill pl">🌐 Live</span>`:`<span class="pill" style="background:var(--normal-bg);border-color:rgba(0,135,90,.2);color:var(--green)">✓ Verified</span>`;
+  const isClosed=t.closeDate&&new Date(t.closeDate)<new Date();
+  const awardedHtml=t.awardedTo?`<div class="awarded-box">🏆 <strong>Awarded to:</strong> ${e(t.awardedTo)}${t.awardedNote?` — ${e(t.awardedNote)}`:''}</div>`:'';
+  const recomHtml=t.recomDate?`<div class="recom-box">🔄 <strong>Re-commissioning:</strong> ${e(t.recomDate)} — ${e(t.recomReason||'Contract term suggests re-tender likely')}</div>`:'';
+  const closedNoteHtml=(!t.awardedTo&&!t.recomDate&&t.closedNote)?`<div class="recom-box">📌 <strong>Watch:</strong> ${e(t.closedNote)}</div>`:'';
+  const valBadge=t.value?`<span class="val-badge">💰 ${e(t.value)}</span>`:'';
+  return`<div class="card ${bc}" style="animation-delay:${Math.min(i*.02,.25)}s" onclick="window.open('${e(t.url||'#')}','_blank')">
+    <div class="ctop">
+      <div style="flex:1"><div class="ctit">${e(t.title)}</div><div class="corg">${e(t.org)}</div></div>
+      <div style="text-align:right;flex-shrink:0;min-width:88px"><span class="cb ${cbcl(t)}">⏱ ${e(t.closes)}</span>${dtag(t)}</div>
+    </div>
+    <div class="cdsc">${e(t.desc||'')}</div>
+    ${awardedHtml}${recomHtml}${closedNoteHtml}
+    <div class="cft"><span class="pill ps">📍 ${t.state}</span><span class="pill ${TP[t.type]||'pp'}">${TL[t.type]||t.type}</span>${stag}${valBadge}${!isClosed?winBadge(t):''}</div>
+  </div>`;
+}
+
+const BASE_OPEN=[
+  {title:'Business Accelerator Coaching — Practice Owners (EOI)',org:'Hunter New England & CC PHN',state:'NSW',type:'gp',closes:'22 Apr 2026',closeDate:'2026-04-22',desc:'6-month PHN-subsidised coaching for GP & allied health practice owners. Grant $2,200; co-contribution $400.',url:'https://www.hneccphn.com.au/commissioning-opportunities/'},
+  {title:'Expedited Specialist Pathway GP Grants ($10,000)',org:'Hunter New England & CC PHN',state:'NSW',type:'gp',closes:'31 May 2026',closeDate:'2026-05-31',desc:'$10,000 per grant for practices recruiting IMG GPs via the Expedited Specialist Pathway. 3 grants remaining.',url:'https://www.hneccphn.com.au/commissioning-opportunities/'},
+  {title:'IPC Nursing Training Scholarships — AQF Level 8',org:'Hunter New England & CC PHN',state:'NSW',type:'phn',closes:'30 Jun 2026',closeDate:'2026-06-30',desc:'30 scholarships for RNs in GP practices and aged care to complete AQF Level 8 IPC training.',url:'https://www.hneccphn.com.au/commissioning-opportunities/'},
+  {title:'Imprest System Grant — Aged Care Homes ($4,000)',org:'South Western Sydney PHN',state:'NSW',type:'phn',closes:'31 Mar 2026',closeDate:'2026-03-31',desc:'$4,000 grant for SW Sydney aged care homes to implement imprest medication systems.',url:'https://www.swsphn.com.au/opportunities/'},
+  {title:'Culturally Responsive Low Intensity MH Services (EOI)',org:'South Western Sydney PHN',state:'NSW',type:'mental_health',closes:'TBA — opens 16 Mar 2026',closeDate:null,desc:'EOI for organisations delivering low intensity MH for Aboriginal & CALD populations.',url:'https://www.swsphn.com.au/opportunities/'},
+  {title:'Way Back Service — Universal Aftercare (RFP)',org:'Western NSW PHN',state:'NSW',type:'mental_health',closes:'See TenderLink',closeDate:null,desc:'Single organisation to deliver Universal Aftercare for people 16+ following a suicide crisis.',url:'https://www.wnswphn.org.au/commissioning/tenders/'},
+  {title:'Medicare Mental Health Centre — Far West NSW (RFP)',org:'Western NSW PHN',state:'NSW',type:'mental_health',closes:'See TenderLink',closeDate:null,desc:'RFP for MMHC hub-and-satellite model in Far West NSW.',url:'https://www.wnswphn.org.au/commissioning/tenders/'},
+  {title:'MDT Care — Request for Proposal',org:'Western Sydney PHN (WentWest)',state:'NSW',type:'allied',closes:'See TenderLink',closeDate:null,desc:'Organisations sought to deliver a local MDT service aligned to Building a Stronger Medicare.',url:'https://www.wsphn.org.au/commissioning/commissioning-opportunities/'},
+  {title:'Healthy Towns Program — Service Provider (RFP)',org:'North Coast PHN (HNC)',state:'NSW',type:'phn',closes:'See TenderLink',closeDate:null,desc:'Place-based health initiative across 6+ North Coast towns — community-led health planning.',url:'https://ncphn.org.au/funding-and-tenders/'},
+  {title:'Link Worker Program — Service Provider (RFP)',org:'North Coast PHN (HNC)',state:'NSW',type:'phn',closes:'See TenderLink',closeDate:null,desc:'Link Workers connecting patients with social supports through GP practices on the North Coast.',url:'https://ncphn.org.au/funding-and-tenders/'},
+  {title:'General Practice Support (RFP)',org:'North Coast PHN (HNC)',state:'NSW',type:'gp',closes:'See TenderLink',closeDate:null,desc:'Direct GP practice support — practice improvement, QI, capacity building on the North Coast.',url:'https://ncphn.org.au/funding-and-tenders/'},
+  {title:'Primary Care Impact Grants — MDT & QI',org:'North Coast PHN (HNC)',state:'NSW',type:'gp',closes:'Open now',closeDate:null,desc:'MDT Care and QI/chronic disease management grants for North Coast GP practices.',url:'https://ncphn.org.au/funding-and-tenders/'},
+  {title:'After Hours GP Services — Wagga & Border/Western NSW',org:'Murrumbidgee PHN',state:'NSW',type:'gp',closes:'See TenderLink',closeDate:null,desc:'Commissioning after-hours GP services for Wagga Wagga and Border/Western NSW.',url:'https://www.mphn.org.au/commissioning-opportunities/'},
+  {title:'Mental Health Stepped Care & Suicide Prevention',org:'Murrumbidgee PHN',state:'NSW',type:'mental_health',closes:'Ongoing',closeDate:null,desc:'Ongoing stepped care mental health, Medicare MH Centre and suicide prevention commissioning.',url:'https://www.mphn.org.au/commissioning-opportunities/'},
+  {title:'Health Systems & Capacity Building Tender A',org:'NW Melbourne PHN',state:'VIC',type:'phn',closes:'30 Jun 2026',closeDate:'2026-06-30',desc:'Active capacity building commissioning round across NW Melbourne.',url:'https://nwmphn.org.au/our-work/commissioning/current-tenders-and-eois/'},
+  {title:'Health Systems & Capacity Building Tender B',org:'NW Melbourne PHN',state:'VIC',type:'phn',closes:'30 Jun 2026',closeDate:'2026-06-30',desc:'Second capacity building tender — register at portal.tenderlink.com/mpcn for full scope.',url:'https://nwmphn.org.au/our-work/commissioning/current-tenders-and-eois/'},
+  {title:'Virtual Telehealth Support Grant — RACFs',org:'Gold Coast PHN',state:'QLD',type:'gp',closes:'Open now',closeDate:null,desc:'Grant for GPs (5+ consults/week) in Gold Coast RACFs to purchase telehealth equipment.',url:'https://gcphn.org.au/commissioning/commissioning-opportunities/'},
+  {title:'GP in Aged Care Incentive (GPACI) — 4 Practices',org:'Adelaide PHN',state:'SA',type:'gp',closes:'Open now',closeDate:null,desc:'4 GP practices sought to deliver GPACI services in residential aged care homes.',url:'https://adelaidephn.com.au/commissioning/commissioning-opportunities/'},
+  {title:'Active Commissioning — Mental Health & Primary Care',org:'Capital Health Network (ACT)',state:'ACT',type:'mental_health',closes:'See portal',closeDate:null,desc:'ACT PHN commissions psychological therapies, RACF services and primary care programs year-round.',url:'https://chnact.org.au/commissioning-opportunities/'},
+  {title:'Drug, Alcohol & SEWB Services — ACCHO EOI',org:'Northern Territory PHN',state:'NT',type:'mental_health',closes:'See portal',closeDate:null,desc:'SEWB-informed drug and alcohol treatment through Aboriginal Community Controlled Organisations.',url:'https://ntphn.org.au/commissioning-opportunities'},
+  {title:'Multi-Program Commissioning — All WA PHNs',org:'WA Primary Health Alliance',state:'WA',type:'phn',closes:'Various',closeDate:null,desc:'WAPHA coordinates commissioning across all WA PHNs — mental health, aged care, chronic conditions.',url:'https://www.wapha.org.au/about-us/commissioning-opportunities/'},
+  // ── NEW March/April 2026 ──
+  {title:'SWSPHN Notification of Information — Culturally Responsive Low Intensity Mental Health Services',org:'South Western Sydney PHN',state:'NSW',type:'mental_health',closes:'Coming: 6 Apr 2026',closeDate:'2026-04-06',desc:'EOI for organisations to deliver culturally responsive low intensity mental health services across South Western Sydney.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn'},
+  {title:'Expression of Interest: Multidisciplinary Team Care Small Grants Program',org:'South Western Sydney PHN',state:'NSW',type:'gp',closes:'3 Apr 2026',closeDate:'2026-04-03',desc:'Grants for eligible allied health providers servicing the Fairfield LGA to support MDT care small grants program.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn'},
+  {title:'SWSPHN Falls Prevention — Stepping On Program',org:'South Western Sydney PHN',state:'NSW',type:'phn_service',closes:'13 Apr 2026',closeDate:'2026-04-13',desc:'Commission local community service providers to deliver the Stepping On falls prevention program across South Western Sydney.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn'},
+
+  {title:'Murrumbidgee Multicultural Health Needs Assessment (HNA) RFP',org:'Murrumbidgee PHN',state:'NSW',type:'phn_service',closes:'See portal',closeDate:null,desc:'RFP for multicultural health needs assessment across the Murrumbidgee region including migrant and refugee populations.',url:'https://www.australiantenders.com.au/issuer/5129/tenders/murrumbidgee-phn'},
+
+];
+
+// ── BASE_CLOSED: comprehensive pre-loaded data from australiantenders.com.au ──
+// awardedTo: known winner (incumbent intelligence)
+// recomDate: predicted re-commissioning window
+// recomReason: why re-tender is expected
+const BASE_CLOSED=[
+  // ── NSW ──────────────────────────────────────────────────────────────────
+  {title:'Universal Aftercare Services — EOI (Campbelltown)',org:'South Western Sydney PHN',state:'NSW',type:'mental_health',closes:'Closed 3 Aug 2025',closeDate:'2025-08-03',desc:'SWSPHN EOI for Universal Aftercare services in Campbelltown — brief psychosocial support post-suicide crisis.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn',recomDate:'Mid 2026',recomReason:'Federal bilateral funding runs to 2027; full RFP expected to follow EOI stage'},
+  {title:'Campbelltown Medicare Mental Health Centre EOI',org:'South Western Sydney PHN',state:'NSW',type:'mental_health',closes:'Closed 11 Nov 2024',closeDate:'2024-11-11',desc:'EOI for organisations to establish a Medicare Mental Health Centre in Campbelltown.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn',recomDate:'Awarded — watch for contract renewal',recomReason:'Full RFP followed EOI; 3-year contract expected, renewal ~2027'},
+  {title:'Campbelltown Medicare Mental Health Centre RFP',org:'South Western Sydney PHN',state:'NSW',type:'mental_health',closes:'Closed 17 Oct 2024',closeDate:'2024-10-17',desc:'RFP to commission a Medicare Mental Health Centre in Campbelltown, SW Sydney.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn',recomDate:'~Oct 2027',recomReason:'Typical 3-year contract; watch for re-commissioning EOI ~6 months before'},
+  {title:'Bringelly-Green Valley Medicare Urgent Care Clinic (RFT)',org:'South Western Sydney PHN',state:'NSW',type:'gp',closes:'Closed Aug 2025',closeDate:'2025-08-11',desc:'Commissioning of a Medicare UCC for the Bringelly-Green Valley growth corridor.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn',recomDate:'~Aug 2028',recomReason:'Standard 3-year UCC contract; additional UCCs possible in growth corridors 2026'},
+  {title:'MDT Care Small Grants — Fairfield LGA (Allied Health)',org:'South Western Sydney PHN',state:'NSW',type:'allied',closes:'Closed Mar 2026',closeDate:'2026-03-13',desc:'Small grants for eligible allied health providers in Fairfield LGA to deliver MDT care.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn',recomDate:'Early 2027',recomReason:'Annual small grants program; next round expected Q1 2027'},
+  {title:'Multicultural & Homelessness Service Navigation (RFP)',org:'South Western Sydney PHN',state:'NSW',type:'phn',closes:'Closed 2025',closeDate:'2025-09-01',desc:'Commissioning to deliver service navigation for people from diverse cultural backgrounds and experiencing homelessness.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn',recomDate:'~Sep 2028',recomReason:'Likely 3-year contract under DOHA multicultural/homelessness funding'},
+  {title:'Psychological Treatment Services for RACFs — RFT',org:'Western Sydney PHN (WentWest)',state:'NSW',type:'mental_health',closes:'Closed 19 Sep 2025',closeDate:'2025-09-19',desc:'RFT for psychological treatment services for people with mental illness in Western Sydney RACFs.',url:'https://www.australiantenders.com.au/issuer/10197/tenders/wentwest',recomDate:'~Sep 2028',recomReason:'3-year contract; previous award to Stride Mental Health — strong incumbent'},
+  {title:'Head to Health Adult Mental Health Centre — RFT',org:'Western Sydney PHN (WentWest)',state:'NSW',type:'mental_health',closes:'Closed Dec 2023',closeDate:'2023-12-01',desc:'RFT for Head to Health AMHC in Western Sydney. Awarded to Stride Mental Health.',url:'https://www.australiantenders.com.au/issuer/10197/tenders/wentwest',awardedTo:'Stride Mental Health',awardedNote:'Strong incumbent — partnering or alternative approach recommended',recomDate:'~Dec 2026',recomReason:'3-year contract typical; watch for re-commissioning EOI mid-2026'},
+  {title:'Local GP Access Model (EOI)',org:'North Coast PHN (HNC)',state:'NSW',type:'gp',closes:'Closed 30 Nov 2025',closeDate:'2025-11-30',desc:'Trial of same-day unplanned GP care in communities without a Medicare UCC.',url:'https://www.australiantenders.com.au/issuer/3285/tenders/healthy-north-coast',recomDate:'Mid 2026',recomReason:'EOI stage — full RFP likely Q2/Q3 2026 once trial outcomes evaluated'},
+  {title:'Creative Therapies Pilot — Mental Health (EOI)',org:'North Coast PHN (HNC)',state:'NSW',type:'mental_health',closes:'Closed 13 Oct 2025',closeDate:'2025-10-13',desc:'Arts and music therapists delivering creative therapies for moderate-severe mental ill-health.',url:'https://www.australiantenders.com.au/issuer/3285/tenders/healthy-north-coast',recomDate:'Q1 2026',recomReason:'Pilot EOI — commissioning round likely early 2026 if pilot progresses'},
+  {title:'RACF Enhanced Primary Care Access Grants (up to $90k)',org:'North Coast PHN (HNC)',state:'NSW',type:'gp',closes:'Closed Oct 2025',closeDate:'2025-10-31',desc:'Grants for primary care providers in GP thin markets to expand aged care access.',url:'https://www.australiantenders.com.au/issuer/3285/tenders/healthy-north-coast',recomDate:'Oct 2026',recomReason:'Annual grant program — next round expected Oct 2026'},
+  {title:'Certificate IV Medical Practice Assisting — Scholarship EOI',org:'Hunter New England & CC PHN',state:'NSW',type:'gp',closes:'Closed 27 Oct 2025',closeDate:'2025-10-27',desc:'Funded places in Certificate IV Medical Practice Assisting via UNE Partnerships.',url:'https://www.australiantenders.com.au/issuer/3760/tenders/hunter-new-england-central-coast-phn-(hnecc-ltd)',recomDate:'Oct 2026',recomReason:'Annual scholarship round — identical timing expected each year'},
+  {title:'Small Town Engagement Model (STEM) Grants — EOI',org:'Hunter New England & CC PHN',state:'NSW',type:'phn',closes:'Closed 2025',closeDate:'2025-08-01',desc:'Grants for initiatives addressing health engagement in small towns across the HNECC region.',url:'https://www.australiantenders.com.au/issuer/3760/tenders/hunter-new-england-central-coast-phn-(hnecc-ltd)',recomDate:'Aug 2026',recomReason:'Annual STEM program — watch for EOI same time next year'},
+  {title:'Distress Brief Support — Brief Intervention Services (RFP)',org:'Hunter New England & CC PHN',state:'NSW',type:'mental_health',closes:'Closed 2025',closeDate:'2025-07-01',desc:'RFP for organisations to deliver brief intervention for people experiencing distress in the community.',url:'https://www.australiantenders.com.au/issuer/3760/tenders/hunter-new-england-central-coast-phn-(hnecc-ltd)',recomDate:'~Jul 2027',recomReason:'2-year contract likely; watch for re-tender Jul 2027'},
+  {title:'Suicide Prevention Grants — Community Organisations (EOI)',org:'Hunter New England & CC PHN',state:'NSW',type:'mental_health',closes:'Closed 2025',closeDate:'2025-06-01',desc:'Grants for community-based organisations with a local suicide prevention program.',url:'https://www.australiantenders.com.au/issuer/3760/tenders/hunter-new-england-central-coast-phn-(hnecc-ltd)',recomDate:'Jun 2026',recomReason:'Annual competitive grants program — identical window expected'},
+  {title:'Psychosocial Grants 2025-26 — EOI',org:'Murrumbidgee PHN',state:'NSW',type:'mental_health',closes:'Closed 2025',closeDate:'2025-11-01',desc:'Grants between $5,000 and $50,000 for mental wellbeing and psychosocial recovery activities.',url:'https://www.australiantenders.com.au/issuer/5129/tenders/murrumbidgee-phn',recomDate:'Nov 2026',recomReason:'Annual program — Murrumbidgee PHN releases this same time each year'},
+  {title:'Winter Strategy 2026 — Chronic Disease Care',org:'Murrumbidgee PHN',state:'NSW',type:'gp',closes:'Closed 20 Feb 2026',closeDate:'2026-02-20',desc:'GP practices invited to deliver proactive chronic disease care over winter.',url:'https://www.australiantenders.com.au/issuer/5129/tenders/murrumbidgee-phn',recomDate:'Feb 2027',recomReason:'Annual Winter Strategy — same timing expected each year'},
+  {title:'Multicultural RFP — New and Emerging Communities',org:'Murrumbidgee PHN',state:'NSW',type:'phn',closes:'Closed 2025',closeDate:'2025-06-30',desc:'RFP for organisations to support primary care access for people from migrant and refugee backgrounds.',url:'https://www.australiantenders.com.au/issuer/5129/tenders/murrumbidgee-phn',recomDate:'~Jun 2027',recomReason:'2-year contract likely under DOHA multicultural health funding'},
+  {title:'EOI — GP-Led Urgent Care Service (Chatswood & Dee Why)',org:'Northern Sydney PHN',state:'NSW',type:'gp',closes:'Closed 2024',closeDate:'2024-09-01',desc:'SNHN invited organisations to deliver a GP-led urgent care service in Chatswood and Dee Why.',url:'https://www.australiantenders.com.au/issuer/7381/tenders/sydney-north-phn',recomDate:'~Sep 2027',recomReason:'Awarded — 3-year contract; watch SNHN for additional UCC locations in 2025-26'},
+  {title:'Medicare Urgent Care Clinic (UCC) — EOI',org:'Northern Sydney PHN',state:'NSW',type:'gp',closes:'Closed 2024',closeDate:'2024-06-01',desc:'EOI from general practices, community health centres and ACCHOs to establish a Medicare UCC.',url:'https://www.australiantenders.com.au/issuer/7381/tenders/sydney-north-phn',recomDate:'Watch for additional sites',recomReason:'UCC program expanding nationally — SNHN may release additional location EOIs'},
+  {title:'RFP — Welfare, Wellbeing & Community Grants (up to $100k)',org:'Northern Sydney PHN',state:'NSW',type:'phn',closes:'Closed 2024',closeDate:'2024-08-01',desc:'Grants up to $100,000 for community organisations for wellbeing and primary care initiatives.',url:'https://www.australiantenders.com.au/issuer/7381/tenders/sydney-north-phn',recomDate:'Aug 2025 / Aug 2026',recomReason:'Annual grants program — watch SNHN for next round announcement'},
+  // ── VIC ──────────────────────────────────────────────────────────────────
+  {title:'headspace Centre — Moonee Valley (RFP)',org:'North Western Melbourne PHN',state:'VIC',type:'mental_health',closes:'Closed 2025',closeDate:'2025-06-30',desc:'NWMPHN sought a provider to establish and operate a new headspace centre in Moonee Valley.',url:'https://www.australiantenders.com.au/issuer/5443/tenders/north-western-melbourne-phn',recomDate:'~Jun 2030',recomReason:'headspace contracts typically 5 years; centre now operational — watch for renewal'},
+  {title:'RFI — Funding to Improve Primary Care for Overseas-Born Residents',org:'North Western Melbourne PHN',state:'VIC',type:'phn',closes:'Closed Dec 2025',closeDate:'2025-12-17',desc:'NWMPHN sought interest to improve primary care access for residents born overseas.',url:'https://www.australiantenders.com.au/issuer/5443/tenders/north-western-melbourne-phn',recomDate:'Q1–Q2 2026',recomReason:'RFI stage — commissioning round expected shortly after interest assessed'},
+  {title:'MDT Melton Neighbourhood Care Team — RFT',org:'North Western Melbourne PHN',state:'VIC',type:'allied',closes:'Closed Feb 2026',closeDate:'2026-02-06',desc:'RFT for a highly mobile 2-person MDT to work with selected GP practices within Melton LGA.',url:'https://www.australiantenders.com.au/issuer/5443/tenders/north-western-melbourne-phn',recomDate:'~Feb 2028',recomReason:'2-year contract likely; watch for expansion to additional LGAs'},
+  {title:'Medicare Urgent Care Clinic Services — RFT',org:'Eastern Melbourne PHN',state:'VIC',type:'gp',closes:'Closed 2025',closeDate:'2025-03-01',desc:'EMPHN tender for Medicare UCC services in Eastern Melbourne.',url:'https://www.australiantenders.com.au/issuer/2702/tenders/eastern-melbourne-phn',recomDate:'~Mar 2028',recomReason:'3-year contract standard for UCCs; watch for additional site EOIs'},
+  {title:'Suicide Prevention Lived Experience Services — RFT',org:'Eastern Melbourne PHN',state:'VIC',type:'mental_health',closes:'Closed 2024',closeDate:'2024-09-01',desc:'RFT for organisations to provide Suicide Prevention Lived Experience services.',url:'https://www.australiantenders.com.au/issuer/2702/tenders/eastern-melbourne-phn',recomDate:'~Sep 2026',recomReason:'2-year contract likely; watch EMPHN for re-commissioning'},
+  {title:'Climate Vulnerability & Risk Maps — RFP',org:'Gippsland PHN',state:'VIC',type:'phn',closes:'Closed Sep 2024',closeDate:'2024-09-01',desc:'RFP for geospatial interactive Gippsland Climate Vulnerability and Risk Maps. Budget ~$85k.',url:'https://www.australiantenders.com.au/issuer/3051/tenders/gippsland-phn',recomDate:'Not expected',recomReason:'One-off project — awarded 2024; outputs inform PHN health planning'},
+  // ── QLD ──────────────────────────────────────────────────────────────────
+  {title:'Redcliffe Medicare Mental Health Centre — RFT',org:'Brisbane North PHN',state:'QLD',type:'mental_health',closes:'Closed 2025',closeDate:'2025-06-01',desc:'Brisbane North PHN tender to deliver the Redcliffe Medicare Mental Health Centre from 1 Jul 2025.',url:'https://www.australiantenders.com.au/issuer/10806/tenders/brisbane-north-phn',recomDate:'~Jun 2028',recomReason:'3-year contract; delivery commenced Jul 2025 — watch for renewal EOI 2027–28'},
+  {title:'Head to Health Phone Service — North Brisbane & Moreton Bay (RFT)',org:'Brisbane North PHN',state:'QLD',type:'mental_health',closes:'Closed 2024',closeDate:'2024-10-01',desc:'Tenders to deliver the Head to Health Phone Service from Jan 2025.',url:'https://www.australiantenders.com.au/issuer/10806/tenders/brisbane-north-phn',recomDate:'~Jan 2027',recomReason:'2-year initial contract; watch for re-commissioning late 2026'},
+  {title:'Social Prescribing Proof-of-Concept — Caboolture/Kilcoy (RFT)',org:'Brisbane North PHN',state:'QLD',type:'phn',closes:'Closed 2025',closeDate:'2025-02-01',desc:'Tender to deliver a social prescribing proof-of-concept in the Caboolture/Kilcoy catchment.',url:'https://www.australiantenders.com.au/issuer/10806/tenders/brisbane-north-phn',recomDate:'2026–27',recomReason:'Proof-of-concept → if successful, full commissioning round likely 2026–27'},
+  {title:'Intergenerational Program — Social Isolation in Older People (RFT)',org:'Brisbane North PHN',state:'QLD',type:'allied',closes:'Closed 2025',closeDate:'2025-04-01',desc:'Tender to deliver an intergenerational program to reduce social isolation and loneliness of older people.',url:'https://www.australiantenders.com.au/issuer/10806/tenders/brisbane-north-phn',recomDate:'~Apr 2027',recomReason:'2-year contract likely; watch for re-commissioning 2027'},
+  {title:'Care Finder Program — Specialist Aged Care Navigation (RFT)',org:'Brisbane North PHN',state:'QLD',type:'allied',closes:'Closed 2024',closeDate:'2024-08-01',desc:'Tender for specialist and intensive aged care navigation assistance for older people.',url:'https://www.australiantenders.com.au/issuer/10806/tenders/brisbane-north-phn',recomDate:'~Aug 2026',recomReason:'2-year contract; national Care Finder program — watch for re-commissioning'},
+  {title:'headspace Centre for Caloundra — RFP',org:'Central QLD Wide Bay SC PHN',state:'QLD',type:'mental_health',closes:'Closed 2024',closeDate:'2024-08-01',desc:'RFP for lead agency of a headspace centre for Caloundra and surrounds.',url:'https://www.australiantenders.com.au/issuer/1434/tenders/central-queensland-wide-bay-sunshine-coast-phn',recomDate:'~Aug 2029',recomReason:'headspace 5-year contracts standard; centre now operational'},
+  {title:'Care Finder Program — Central QLD (RFT)',org:'Central QLD Wide Bay SC PHN',state:'QLD',type:'allied',closes:'Closed 2024',closeDate:'2024-07-01',desc:'Care Finder Program for specialist assistance to help people access aged care services.',url:'https://www.australiantenders.com.au/issuer/1434/tenders/central-queensland-wide-bay-sunshine-coast-phn',recomDate:'~Jul 2026',recomReason:'2-year Care Finder contract; national program re-commissioning expected'},
+  // ── SA ───────────────────────────────────────────────────────────────────
+  {title:'Distress Brief Support Trial Sites — RFP (Country SA)',org:'Country SA PHN',state:'SA',type:'mental_health',closes:'Closed 2025',closeDate:'2025-09-01',desc:'RFP to establish two Distress Brief Support Trial sites in country South Australia.',url:'https://www.australiantenders.com.au/issuer/1879/tenders/country-sa-phn-(sa-rural-health-network-limited)',recomDate:'~Sep 2027',recomReason:'Trial sites → 2-year contract likely; watch for expansion commissioning round'},
+  {title:'Medicare Urgent Care Clinic — Mount Gambier (EOI)',org:'Country SA PHN',state:'SA',type:'gp',closes:'Closed 2025',closeDate:'2025-06-01',desc:'Two-stage EOI to identify interested organisations for a Medicare UCC within Mount Gambier.',url:'https://www.australiantenders.com.au/issuer/1879/tenders/country-sa-phn-(sa-rural-health-network-limited)',recomDate:'RFP expected Q3 2025 / Q4 2025',recomReason:'EOI → RFP two-stage process; watch for full RFP already released or imminent'},
+  {title:'Universal Aftercare — Mount Barker, Mount Gambier, Murray Bridge',org:'Country SA PHN',state:'SA',type:'mental_health',closes:'Closed 2025',closeDate:'2025-04-01',desc:'Universal Aftercare services in Mount Barker, Mount Gambier and Murray Bridge.',url:'https://www.australiantenders.com.au/issuer/1879/tenders/country-sa-phn-(sa-rural-health-network-limited)',recomDate:'~Apr 2027',recomReason:'2-year contract under federal bilateral; watch for expansion sites 2026'},
+  {title:'headspace Centre — Gawler (RFT)',org:'Country SA PHN',state:'SA',type:'mental_health',closes:'Closed 2024',closeDate:'2024-06-01',desc:'National rollout tender to establish a headspace Centre in Gawler, Country SA.',url:'https://www.australiantenders.com.au/issuer/1879/tenders/country-sa-phn-(sa-rural-health-network-limited)',recomDate:'~Jun 2029',recomReason:'headspace 5-year contract; centre now operational'},
+  // ── WA ───────────────────────────────────────────────────────────────────
+  {title:'Multicultural Health Navigation Service — Perth North PHN',org:'WA Primary Health Alliance',state:'WA',type:'phn',closes:'Closed 23 Jul 2025',closeDate:'2025-07-23',desc:'WAPHA contract to deliver a Health Navigation Service for multicultural communities in Perth North.',url:'https://www.australiantenders.com.au/issuer/8124/tenders/wa-primary-health-alliance',recomDate:'~Jul 2027',recomReason:'2-year contract likely; watch WAPHA for renewal or expansion to Perth South'},
+  {title:'Endometriosis & Pelvic Pain Clinics Expansion — Perth North (EOI)',org:'WA Primary Health Alliance',state:'WA',type:'specialist',closes:'Closed 22 Jul 2025',closeDate:'2025-07-22',desc:'EOI for 11 new Endometriosis and Pelvic Pain Clinics — $19.6M over 3 years from 2025.',url:'https://www.australiantenders.com.au/issuer/8124/tenders/wa-primary-health-alliance',recomDate:'Q4 2025 / Q1 2026',recomReason:'EOI stage → full RFP expected within 3–6 months; other PHNs to follow'},
+  {title:'Aftercare Services — South West WA (RFP)',org:'WA Primary Health Alliance',state:'WA',type:'mental_health',closes:'Closed 22 Jul 2025',closeDate:'2025-07-22',desc:'WAPHA proposals to deliver Aftercare Services in the South West region post-suicide crisis.',url:'https://www.australiantenders.com.au/issuer/8124/tenders/wa-primary-health-alliance',recomDate:'~Jul 2027',recomReason:'2-year contract under federal bilateral; watch for Pilbara and metro expansion'},
+  {title:'Aftercare Services — Pilbara Region (RFP)',org:'WA Primary Health Alliance',state:'WA',type:'mental_health',closes:'Closed 2025',closeDate:'2025-05-01',desc:'Aftercare Services for the Pilbara region — brief interventions post-suicide crisis.',url:'https://www.australiantenders.com.au/issuer/8124/tenders/wa-primary-health-alliance',recomDate:'~May 2027',recomReason:'2-year aftercare contract; watch WAPHA for Goldfields/Kimberley expansion'},
+  {title:'Peel Youth Mental Health Navigation — RFP (co-commissioned)',org:'WA Primary Health Alliance',state:'WA',type:'mental_health',closes:'Closed 2025',closeDate:'2025-03-01',desc:'Co-commissioned by WAPHA and WA Mental Health Commission — youth mental health navigation for Peel.',url:'https://www.australiantenders.com.au/issuer/8124/tenders/wa-primary-health-alliance',recomDate:'~Mar 2027',recomReason:'2-year term; watch for expansion to additional PHN regions'},
+  // ── NT ───────────────────────────────────────────────────────────────────
+  {title:'NT Mental Health Lived Experience Collaborative Network',org:'Northern Territory PHN',state:'NT',type:'mental_health',closes:'Closed 9 Feb 2025',closeDate:'2025-02-09',desc:'Darwin or Alice Springs organisation to establish a NT Mental Health Lived Experience Collaborative Network.',url:'https://www.australiantenders.com.au/issuer/5475/tenders/northern-territory-phn',recomDate:'~Feb 2027',recomReason:'2-year contract likely; network model may expand if successful'},
+  {title:'Mental Health Treatments for Eating Disorders — EOI',org:'Northern Territory PHN',state:'NT',type:'mental_health',closes:'Closed 1 Nov 2024',closeDate:'2024-11-01',desc:'EOI from mental health NGOs in Darwin or Alice Springs to deliver eating disorder treatments.',url:'https://www.australiantenders.com.au/issuer/5475/tenders/northern-territory-phn',recomDate:'Q1 2025 (RFP already released)',recomReason:'EOI → RFP pipeline; watch NT PHN for current RFP status'},
+  {title:'Nutrition Support for Eating Disorders — EOI',org:'Northern Territory PHN',state:'NT',type:'allied',closes:'Closed 25 Oct 2024',closeDate:'2024-10-25',desc:'EOI for nutrition support services for people with eating disorders in Darwin/Alice Springs.',url:'https://www.australiantenders.com.au/issuer/5475/tenders/northern-territory-phn',recomDate:'Q1–Q2 2025 (RFP likely)',recomReason:'EOI → RFP pipeline; check NT PHN portal for current status'},
+  {title:'NT Suicide Prevention Community Grants 2025/26',org:'Northern Territory PHN',state:'NT',type:'mental_health',closes:'Closed 14 Jul 2025',closeDate:'2025-07-14',desc:'NT Government/NT PHN grants for community and NGO-led suicide prevention initiatives.',url:'https://www.australiantenders.com.au/issuer/5475/tenders/northern-territory-phn',recomDate:'Jul 2026',recomReason:'Annual grants program — same timing expected each year'},
+  {title:'SE NSW PHN — Preventative Health In-Reach EOI',org:'South Eastern NSW PHN',state:'NSW',type:'gp',closes:'Closed 2024',closeDate:'2024-09-01',desc:'COORDINARE EOI from organisations to implement a preventative health in-reach activity.',url:'https://www.australiantenders.com.au/issuer/1828/tenders/coordinare-south-eastern-nsw-phn',recomDate:'~Sep 2026',recomReason:'2-year in-reach contract; watch COORDINARE for re-commissioning'},
+  {title:'Murrumbidgee — Welcoming Environments Small Grants',org:'Murrumbidgee PHN',state:'NSW',type:'phn',closes:'Closed 2024',closeDate:'2024-10-01',desc:'Small grants under the Integrated Team Care program to improve ATSI community access to primary care.',url:'https://www.australiantenders.com.au/issuer/5129/tenders/murrumbidgee-phn',recomDate:'Oct 2025 / Oct 2026',recomReason:'Annual ITC small grants program; watch for next round'},
+  {title:'Brisbane South PHN — Strengthening Medicare GP Grants (up to $50k)',org:'Brisbane South PHN',state:'QLD',type:'gp',closes:'Closed 30 Jun 2024',closeDate:'2024-06-30',desc:'Commonwealth grants for eligible GP practices to expand patient access and bulk billing.',url:'https://www.australiantenders.com.au/issuer/1036/tenders/brisbane-south-phn',recomDate:'Not re-commissioning',recomReason:'One-off national Strengthening Medicare program — concluded nationally Jun 2024'},
+  // ── NSW ──────────────────────────────────────────────────────────────────
+  {title:'Universal Aftercare Services — EOI (Campbelltown)',org:'South Western Sydney PHN',state:'NSW',type:'mental_health',closes:'Closed 3 Aug 2025',closeDate:'2025-08-03',desc:'SWSPHN EOI for Universal Aftercare services in Campbelltown — brief psychosocial support post-suicide crisis.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn',closedNote:'Watch for full RFP — program funded until 2027'},
+  {title:'Campbelltown Medicare Mental Health Centre EOI',org:'South Western Sydney PHN',state:'NSW',type:'mental_health',closes:'Closed 11 Nov 2024',closeDate:'2024-11-11',desc:'EOI for organisations to establish a Medicare Mental Health Centre in Campbelltown.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn',closedNote:'Full RFP likely to follow — watch SWSPHN'},
+  {title:'Campbelltown Medicare Mental Health Centre RFP',org:'South Western Sydney PHN',state:'NSW',type:'mental_health',closes:'Closed 17 Oct 2024',closeDate:'2024-10-17',desc:'RFP to commission a Medicare Mental Health Centre in Campbelltown, SW Sydney.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn',closedNote:'Awarded — watch for re-commissioning round 2026'},
+  {title:'Bringelly-Green Valley Medicare Urgent Care Clinic (RFT)',org:'South Western Sydney PHN',state:'NSW',type:'gp',closes:'Closed Aug 2025',closeDate:'2025-08-11',desc:'Commissioning of a Medicare UCC for the Bringelly-Green Valley growth corridor.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn',closedNote:'Commissioned — watch for additional UCC rounds 2026'},
+  {title:'MDT Care Small Grants — Fairfield LGA (Allied Health)',org:'South Western Sydney PHN',state:'NSW',type:'allied',closes:'Closed Mar 2026',closeDate:'2026-03-13',desc:'Small grants for eligible allied health providers in Fairfield LGA to deliver MDT care.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn',closedNote:'Watch for next round'},
+  {title:'Multicultural & Homelessness Service Navigation (RFP)',org:'South Western Sydney PHN',state:'NSW',type:'phn',closes:'Closed 2025',closeDate:'2025-09-01',desc:'Commissioning to deliver service navigation for people from diverse cultural backgrounds and experiencing homelessness.',url:'https://www.australiantenders.com.au/issuer/10685/tenders/south-western-sydney-phn',closedNote:'Watch SWSPHN for re-commissioning'},
+  {title:'Psychological Treatment Services for RACFs — RFT',org:'Western Sydney PHN (WentWest)',state:'NSW',type:'mental_health',closes:'Closed 19 Sep 2025',closeDate:'2025-09-19',desc:'RFT for psychological treatment services for people with mental illness in Western Sydney RACFs.',url:'https://www.australiantenders.com.au/issuer/10197/tenders/wentwest',closedNote:'Awarded — likely multi-year contract'},
+  {title:'Head to Health Adult Mental Health Centre — RFT',org:'Western Sydney PHN (WentWest)',state:'NSW',type:'mental_health',closes:'Closed Dec 2023',closeDate:'2023-12-01',desc:'RFT for Head to Health AMHC in Western Sydney. Awarded to Stride Mental Health.',url:'https://www.australiantenders.com.au/issuer/10197/tenders/wentwest',closedNote:'Awarded to Stride Mental Health'},
+  {title:'Local GP Access Model (EOI)',org:'North Coast PHN (HNC)',state:'NSW',type:'gp',closes:'Closed 30 Nov 2025',closeDate:'2025-11-30',desc:'Trial of same-day unplanned GP care in communities without a Medicare UCC.',url:'https://www.australiantenders.com.au/issuer/3285/tenders/healthy-north-coast',closedNote:'Watch HNC portal for new round'},
+  {title:'Creative Therapies Pilot — Mental Health (EOI)',org:'North Coast PHN (HNC)',state:'NSW',type:'mental_health',closes:'Closed 13 Oct 2025',closeDate:'2025-10-13',desc:'Arts and music therapists delivering creative therapies for moderate-severe mental ill-health.',url:'https://www.australiantenders.com.au/issuer/3285/tenders/healthy-north-coast',closedNote:'Watch HNC for 2026 commissioning round'},
+  {title:'RACF Enhanced Primary Care Access Grants (up to $90k)',org:'North Coast PHN (HNC)',state:'NSW',type:'gp',closes:'Closed Oct 2025',closeDate:'2025-10-31',desc:'Grants for primary care providers in GP thin markets to expand aged care access.',url:'https://www.australiantenders.com.au/issuer/3285/tenders/healthy-north-coast',closedNote:'Next round TBA — watch HNC'},
+  {title:'Certificate IV Medical Practice Assisting — Scholarship EOI',org:'Hunter New England & CC PHN',state:'NSW',type:'gp',closes:'Closed 27 Oct 2025',closeDate:'2025-10-27',desc:'Funded places in Certificate IV Medical Practice Assisting via UNE Partnerships for practices in HNECC region.',url:'https://www.australiantenders.com.au/issuer/3760/tenders/hunter-new-england-central-coast-phn-(hnecc-ltd)',closedNote:'New round likely 2026'},
+  {title:'Small Town Engagement Model (STEM) Grants — EOI',org:'Hunter New England & CC PHN',state:'NSW',type:'phn',closes:'Closed 2025',closeDate:'2025-08-01',desc:'Grants for initiatives addressing health engagement in small towns across the HNECC region.',url:'https://www.australiantenders.com.au/issuer/3760/tenders/hunter-new-england-central-coast-phn-(hnecc-ltd)',closedNote:'Watch HNECC for next STEM round'},
+  {title:'Distress Brief Support — Brief Intervention Services (RFP)',org:'Hunter New England & CC PHN',state:'NSW',type:'mental_health',closes:'Closed 2025',closeDate:'2025-07-01',desc:'RFP for organisations to deliver brief intervention for people experiencing distress in the community.',url:'https://www.australiantenders.com.au/issuer/3760/tenders/hunter-new-england-central-coast-phn-(hnecc-ltd)',closedNote:'Watch HNECC PHN for re-commissioning'},
+  {title:'Suicide Prevention Grants — Community Organisations (EOI)',org:'Hunter New England & CC PHN',state:'NSW',type:'mental_health',closes:'Closed 2025',closeDate:'2025-06-01',desc:'Grants for community-based organisations with a local suicide prevention program.',url:'https://www.australiantenders.com.au/issuer/3760/tenders/hunter-new-england-central-coast-phn-(hnecc-ltd)',closedNote:'Annual round — watch for 2026 EOI'},
+  {title:'Psychosocial Grants 2025-26 — EOI',org:'Murrumbidgee PHN',state:'NSW',type:'mental_health',closes:'Closed 2025',closeDate:'2025-11-01',desc:'Grants between $5,000 and $50,000 to fund activities supporting mental wellbeing and psychosocial recovery.',url:'https://www.australiantenders.com.au/issuer/5129/tenders/murrumbidgee-phn',closedNote:'New round expected 2026'},
+  {title:'Winter Strategy 2026 — Chronic Disease Care',org:'Murrumbidgee PHN',state:'NSW',type:'gp',closes:'Closed 20 Feb 2026',closeDate:'2026-02-20',desc:'GP practices invited to deliver proactive chronic disease care over winter.',url:'https://www.australiantenders.com.au/issuer/5129/tenders/murrumbidgee-phn',closedNote:'Watch for mid-2026 re-open'},
+  {title:'Multicultural RFP — New and Emerging Communities',org:'Murrumbidgee PHN',state:'NSW',type:'phn',closes:'Closed 2025',closeDate:'2025-06-30',desc:'RFP for organisations to support primary care access for people from migrant and refugee backgrounds.',url:'https://www.australiantenders.com.au/issuer/5129/tenders/murrumbidgee-phn',closedNote:'Watch for re-commissioning 2026'},
+  {title:'EOI — GP-Led Urgent Care Service (Chatswood & Dee Why)',org:'Northern Sydney PHN',state:'NSW',type:'gp',closes:'Closed 2024',closeDate:'2024-09-01',desc:'SNHN invited organisations to deliver a GP-led urgent care service in Chatswood and Dee Why.',url:'https://www.australiantenders.com.au/issuer/7381/tenders/sydney-north-phn',closedNote:'Watch SNHN for further UCC rounds'},
+  {title:'Medicare Urgent Care Clinic (UCC) — EOI',org:'Northern Sydney PHN',state:'NSW',type:'gp',closes:'Closed 2024',closeDate:'2024-06-01',desc:'EOI from general practices, community health centres and ACCHOs to establish a Medicare UCC in Northern Sydney.',url:'https://www.australiantenders.com.au/issuer/7381/tenders/sydney-north-phn',closedNote:'Watch SNHN for new UCC locations'},
+  {title:'RFP — Welfare, Wellbeing & Community Grants (up to $100k)',org:'Northern Sydney PHN',state:'NSW',type:'phn',closes:'Closed 2024',closeDate:'2024-08-01',desc:'Grants up to $100,000 for organisations and community groups for wellbeing and primary care initiatives.',url:'https://www.australiantenders.com.au/issuer/7381/tenders/sydney-north-phn',closedNote:'Annual program — watch SNHN for next round'},
+  // ── VIC ──────────────────────────────────────────────────────────────────
+  {title:'headspace Centre — Moonee Valley (RFP)',org:'North Western Melbourne PHN',state:'VIC',type:'mental_health',closes:'Closed 2025',closeDate:'2025-06-30',desc:'NWMPHN sought a provider to establish and operate a new headspace centre in the City of Moonee Valley.',url:'https://www.australiantenders.com.au/issuer/5443/tenders/north-western-melbourne-phn',closedNote:'Centre expected to open 2025–26'},
+  {title:'RFI — Funding to Improve Primary Care for Overseas-Born Residents',org:'North Western Melbourne PHN',state:'VIC',type:'phn',closes:'Closed Dec 2025',closeDate:'2025-12-17',desc:'NWMPHN sought interest from organisations to improve primary care access for residents born overseas.',url:'https://www.australiantenders.com.au/issuer/5443/tenders/north-western-melbourne-phn',closedNote:'Watch for commissioning round to follow'},
+  {title:'MDT Melton Neighbourhood Care Team — RFT',org:'North Western Melbourne PHN',state:'VIC',type:'allied',closes:'Closed Feb 2026',closeDate:'2026-02-06',desc:'RFT for a highly mobile 2-person MDT to work with selected GP practices within Melton LGA.',url:'https://www.australiantenders.com.au/issuer/5443/tenders/north-western-melbourne-phn',closedNote:'Likely awarded — watch for expansion'},
+  {title:'Medicare Urgent Care Clinic Services — RFT',org:'Eastern Melbourne PHN',state:'VIC',type:'gp',closes:'Closed 2025',closeDate:'2025-03-01',desc:'EMPHN invited tender responses to provide Medicare UCC services in Eastern Melbourne.',url:'https://www.australiantenders.com.au/issuer/2702/tenders/eastern-melbourne-phn',closedNote:'Awarded — watch for additional sites'},
+  {title:'Suicide Prevention Lived Experience Services — RFT',org:'Eastern Melbourne PHN',state:'VIC',type:'mental_health',closes:'Closed 2024',closeDate:'2024-09-01',desc:'RFT for organisations to provide Suicide Prevention Lived Experience services.',url:'https://www.australiantenders.com.au/issuer/2702/tenders/eastern-melbourne-phn',closedNote:'Watch EMPHN for re-commissioning'},
+  {title:'CRM Solution Development & Implementation — RFT',org:'Eastern Melbourne PHN',state:'VIC',type:'phn',closes:'Closed 2025',closeDate:'2025-02-01',desc:'EMPHN sought a provider for CRM solution development and implementation.',url:'https://www.australiantenders.com.au/issuer/2702/tenders/eastern-melbourne-phn',closedNote:'Internal IT — not re-commissioned'},
+  {title:'Climate Vulnerability & Risk Maps — RFP',org:'Gippsland PHN',state:'VIC',type:'phn',closes:'Closed Sep 2024',closeDate:'2024-09-01',desc:'RFP for geospatial interactive Gippsland Climate Vulnerability and Risk Maps. Budget ~$85k.',url:'https://www.australiantenders.com.au/issuer/3051/tenders/gippsland-phn',closedNote:'Awarded — population health intelligence project'},
+  // ── QLD ──────────────────────────────────────────────────────────────────
+  {title:'Redcliffe Medicare Mental Health Centre — RFT',org:'Brisbane North PHN',state:'QLD',type:'mental_health',closes:'Closed 2025',closeDate:'2025-06-01',desc:'Brisbane North PHN invited tenders to deliver the Redcliffe Medicare Mental Health Centre from 1 Jul 2025.',url:'https://www.australiantenders.com.au/issuer/10806/tenders/brisbane-north-phn',closedNote:'Awarded — delivery commenced Jul 2025'},
+  {title:'Head to Health Phone Service — North Brisbane & Moreton Bay (RFT)',org:'Brisbane North PHN',state:'QLD',type:'mental_health',closes:'Closed 2024',closeDate:'2024-10-01',desc:'Tenders invited to deliver the Head to Health Phone Service commencing Jan 2025.',url:'https://www.australiantenders.com.au/issuer/10806/tenders/brisbane-north-phn',closedNote:'Awarded — delivery active'},
+  {title:'Social Prescribing Proof-of-Concept — Caboolture/Kilcoy (RFT)',org:'Brisbane North PHN',state:'QLD',type:'phn',closes:'Closed 2025',closeDate:'2025-02-01',desc:'Tender to deliver a social prescribing service as a proof-of-concept in the Caboolture/Kilcoy catchment.',url:'https://www.australiantenders.com.au/issuer/10806/tenders/brisbane-north-phn',closedNote:'Watch for expansion to other catchments'},
+  {title:'Intergenerational Program — Social Isolation in Older People (RFT)',org:'Brisbane North PHN',state:'QLD',type:'allied',closes:'Closed 2025',closeDate:'2025-04-01',desc:'Tender to deliver an intergenerational program to reduce social isolation and loneliness of older people.',url:'https://www.australiantenders.com.au/issuer/10806/tenders/brisbane-north-phn',closedNote:'Watch for re-commissioning'},
+  {title:'Care Finder Program — Specialist Aged Care Navigation (RFT)',org:'Brisbane North PHN',state:'QLD',type:'allied',closes:'Closed 2024',closeDate:'2024-08-01',desc:'Tender for specialist and intensive aged care navigation assistance for older people.',url:'https://www.australiantenders.com.au/issuer/10806/tenders/brisbane-north-phn',closedNote:'Awarded — ongoing program'},
+  {title:'headspace Centre for Caloundra — RFP',org:'Central QLD Wide Bay SC PHN',state:'QLD',type:'mental_health',closes:'Closed 2024',closeDate:'2024-08-01',desc:'RFP for lead agency of a headspace centre for Caloundra and surrounds.',url:'https://www.australiantenders.com.au/issuer/1434/tenders/central-queensland-wide-bay-sunshine-coast-phn',closedNote:'Awarded — watch for expansion'},
+  {title:'Care Finder Program — Central QLD (RFT)',org:'Central QLD Wide Bay SC PHN',state:'QLD',type:'allied',closes:'Closed 2024',closeDate:'2024-07-01',desc:'Care Finder Program for specialist assistance to help people access aged care services.',url:'https://www.australiantenders.com.au/issuer/1434/tenders/central-queensland-wide-bay-sunshine-coast-phn',closedNote:'Ongoing — awarded'},
+  // ── SA ───────────────────────────────────────────────────────────────────
+  {title:'Distress Brief Support Trial Sites — RFP (Country SA)',org:'Country SA PHN',state:'SA',type:'mental_health',closes:'Closed 2025',closeDate:'2025-09-01',desc:'RFP to establish two Distress Brief Support Trial sites in country South Australia.',url:'https://www.australiantenders.com.au/issuer/1879/tenders/country-sa-phn-(sa-rural-health-network-limited)',closedNote:'Watch Country SA PHN for new DBS rounds'},
+  {title:'Medicare Urgent Care Clinic — Mount Gambier (EOI)',org:'Country SA PHN',state:'SA',type:'gp',closes:'Closed 2025',closeDate:'2025-06-01',desc:'Two-stage EOI to identify interested organisations for a Medicare UCC within Mount Gambier.',url:'https://www.australiantenders.com.au/issuer/1879/tenders/country-sa-phn-(sa-rural-health-network-limited)',closedNote:'Watch for RFP to follow EOI stage'},
+  {title:'Universal Aftercare — Mount Barker, Mount Gambier, Murray Bridge',org:'Country SA PHN',state:'SA',type:'mental_health',closes:'Closed 2025',closeDate:'2025-04-01',desc:'Universal Aftercare services in Mount Barker, Mount Gambier with secondary service in Murray Bridge.',url:'https://www.australiantenders.com.au/issuer/1879/tenders/country-sa-phn-(sa-rural-health-network-limited)',closedNote:'Awarded — watch for expansion'},
+  {title:'headspace Centre — Gawler (RFT)',org:'Country SA PHN',state:'SA',type:'mental_health',closes:'Closed 2024',closeDate:'2024-06-01',desc:'National rollout tender to establish a headspace Centre in Gawler, Country SA.',url:'https://www.australiantenders.com.au/issuer/1879/tenders/country-sa-phn-(sa-rural-health-network-limited)',closedNote:'Awarded — centre operational'},
+  // ── WA ───────────────────────────────────────────────────────────────────
+  {title:'Multicultural Health Navigation Service — Perth North PHN',org:'WA Primary Health Alliance',state:'WA',type:'phn',closes:'Closed 23 Jul 2025',closeDate:'2025-07-23',desc:'WAPHA contract to deliver a Health Navigation Service improving primary care access for multicultural communities.',url:'https://www.australiantenders.com.au/issuer/8124/tenders/wa-primary-health-alliance',closedNote:'Awarded — watch for renewal'},
+  {title:'Endometriosis & Pelvic Pain Clinics Expansion — Perth North (EOI)',org:'WA Primary Health Alliance',state:'WA',type:'specialist',closes:'Closed 22 Jul 2025',closeDate:'2025-07-22',desc:'EOI for 11 new Endometriosis and Pelvic Pain Clinics across Perth North PHN — $19.6M over 3 years announced Feb 2025.',url:'https://www.australiantenders.com.au/issuer/8124/tenders/wa-primary-health-alliance',closedNote:'Full RFP likely to follow EOI stage'},
+  {title:'Aftercare Services — South West WA (RFP)',org:'WA Primary Health Alliance',state:'WA',type:'mental_health',closes:'Closed 22 Jul 2025',closeDate:'2025-07-22',desc:'WAPHA proposals to deliver Aftercare Services in the South West region — brief interventions post-suicide crisis.',url:'https://www.australiantenders.com.au/issuer/8124/tenders/wa-primary-health-alliance',closedNote:'Awarded — watch for additional regions'},
+  {title:'Aftercare Services — Pilbara Region (RFP)',org:'WA Primary Health Alliance',state:'WA',type:'mental_health',closes:'Closed 2025',closeDate:'2025-05-01',desc:'Aftercare Services for the Pilbara region — brief interventions and psychosocial support post-suicide crisis.',url:'https://www.australiantenders.com.au/issuer/8124/tenders/wa-primary-health-alliance',closedNote:'Watch WAPHA for additional aftercare commissioning'},
+  {title:'Peel Youth Mental Health Navigation — RFP (co-commissioned)',org:'WA Primary Health Alliance',state:'WA',type:'mental_health',closes:'Closed 2025',closeDate:'2025-03-01',desc:'Co-commissioned by WAPHA and WA Mental Health Commission. Youth mental health navigation and coordination for Peel.',url:'https://www.australiantenders.com.au/issuer/8124/tenders/wa-primary-health-alliance',closedNote:'Awarded — watch for metro expansion'},
+  // ── NT ───────────────────────────────────────────────────────────────────
+  {title:'NT Mental Health Lived Experience Collaborative Network',org:'Northern Territory PHN',state:'NT',type:'mental_health',closes:'Closed 9 Feb 2025',closeDate:'2025-02-09',desc:'Darwin or Alice Springs organisation sought to establish a NT Mental Health Lived Experience Collaborative Network.',url:'https://www.australiantenders.com.au/issuer/5475/tenders/northern-territory-phn',closedNote:'Watch NT PHN for re-commissioning'},
+  {title:'Mental Health Treatments for Eating Disorders — EOI',org:'Northern Territory PHN',state:'NT',type:'mental_health',closes:'Closed 1 Nov 2024',closeDate:'2024-11-01',desc:'EOI from mental health NGOs in Darwin or Alice Springs to deliver eating disorder treatments.',url:'https://www.australiantenders.com.au/issuer/5475/tenders/northern-territory-phn',closedNote:'Watch NT PHN for RFP to follow'},
+  {title:'Nutrition Support for Eating Disorders — EOI',org:'Northern Territory PHN',state:'NT',type:'allied',closes:'Closed 25 Oct 2024',closeDate:'2024-10-25',desc:'EOI for nutrition support services for people with eating disorders in Darwin/Alice Springs.',url:'https://www.australiantenders.com.au/issuer/5475/tenders/northern-territory-phn',closedNote:'Watch NT PHN for commissioning round'},
+  {title:'NT Suicide Prevention Community Grants 2025/26',org:'Northern Territory PHN',state:'NT',type:'mental_health',closes:'Closed 14 Jul 2025',closeDate:'2025-07-14',desc:'NT Government/NT PHN grants for community and NGO-led suicide prevention initiatives.',url:'https://www.australiantenders.com.au/issuer/5475/tenders/northern-territory-phn',closedNote:'Annual program — watch for 2026/27 grants'},
+  {title:'SE NSW PHN — Preventative Health In-Reach EOI',org:'South Eastern NSW PHN',state:'NSW',type:'gp',closes:'Closed 2024',closeDate:'2024-09-01',desc:'COORDINARE EOI from organisations to implement a preventative health in-reach activity.',url:'https://www.australiantenders.com.au/issuer/1828/tenders/coordinare-south-eastern-nsw-phn',closedNote:'Watch COORDINARE for re-commissioning'},
+  {title:'Murrumbidgee — Welcoming Environments Small Grants',org:'Murrumbidgee PHN',state:'NSW',type:'phn',closes:'Closed 2024',closeDate:'2024-10-01',desc:'Small grants under the Integrated Team Care program to improve ATSI community access to primary health care.',url:'https://www.australiantenders.com.au/issuer/5129/tenders/murrumbidgee-phn',closedNote:'Annual round — watch for 2025/26 grants'},
+  {title:'Brisbane South PHN — Strengthening Medicare GP Grants (up to $50k)',org:'Brisbane South PHN',state:'QLD',type:'gp',closes:'Closed 30 Jun 2024',closeDate:'2024-06-30',desc:'Commonwealth grants for eligible GP practices to expand patient access and bulk billing.',url:'https://www.australiantenders.com.au/issuer/1036/tenders/brisbane-south-phn',closedNote:'Program concluded nationally'},
+  // ── GOLD COAST PHN ──
+  {title:'Suicide Prevention Community Connector Program',org:'Gold Coast PHN',state:'QLD',type:'mental_health',closes:'Closed',closeDate:'2025-11-30',desc:'Community connectors supporting people after a suicide attempt across Gold Coast.',recomDate:'~Nov 2026',recomReason:'Annual program, consistent recommissioning cycle',url:'https://www.australiantenders.com.au/issuer/3054/tenders/gold-coast-phn'},
+  {title:'Eating Disorder Treatment — GP Practice Support',org:'Gold Coast PHN',state:'QLD',type:'gp',closes:'Closed',closeDate:'2025-10-17',desc:'Coordinated eating disorder treatment and GP practice support across Gold Coast.',recomDate:'~Oct 2026',recomReason:'Annual commissioning cycle',url:'https://www.australiantenders.com.au/issuer/3054/tenders/gold-coast-phn'},
+  {title:'Residential Aged Care — Primary Care Support RFT',org:'Gold Coast PHN',state:'QLD',type:'gp',closes:'Closed',closeDate:'2025-09-01',desc:'Primary care and GP support in residential aged care facilities across Gold Coast.',recomDate:'~Sep 2027',recomReason:'3-year contract term typical for RACF programs',url:'https://www.australiantenders.com.au/issuer/3054/tenders/gold-coast-phn'},
+  {title:'Mental Health Psychosocial Support Services RFT',org:'Gold Coast PHN',state:'QLD',type:'mental_health',closes:'Closed',closeDate:'2025-07-01',desc:'Psychosocial support and stepped care mental health services for Gold Coast.',recomDate:'~Jul 2026',recomReason:'12-month contract, annual retendering',url:'https://www.australiantenders.com.au/issuer/3054/tenders/gold-coast-phn'},
+  // ── ADELAIDE PHN ──
+  {title:'GP Practice Capacity Building Program',org:'Adelaide PHN',state:'SA',type:'gp',closes:'Closed',closeDate:'2025-11-14',desc:'GP practice capacity building and incentives program across metropolitan Adelaide.',recomDate:'~Nov 2026',recomReason:'Annual PHN capacity building cycle',url:'https://www.australiantenders.com.au/issuer/68/tenders/adelaide-phn'},
+  {title:'Alcohol and Other Drugs Treatment Services RFT',org:'Adelaide PHN',state:'SA',type:'mental_health',closes:'Closed',closeDate:'2025-10-03',desc:'AOD assessment, counselling and treatment services for Adelaide residents.',recomDate:'~Oct 2027',recomReason:'2-year contract, next round Oct 2027',url:'https://www.australiantenders.com.au/issuer/68/tenders/adelaide-phn'},
+  {title:'Mental Health Stepped Care — Psychological Therapies',org:'Adelaide PHN',state:'SA',type:'mental_health',closes:'Closed',closeDate:'2025-09-19',desc:'Psychological therapies under stepped care for mild-moderate mental health conditions in SA.',recomDate:'~Sep 2026',recomReason:'Annual stepped care recommissioning',url:'https://www.australiantenders.com.au/issuer/68/tenders/adelaide-phn'},
+  {title:'Care Coordination — Chronic Disease Management EOI',org:'Adelaide PHN',state:'SA',type:'gp',closes:'Closed',closeDate:'2025-06-30',desc:'Care coordination and care navigation for chronic and complex conditions in Adelaide.',recomDate:'~Jun 2026',recomReason:'Annual recommissioning aligned to financial year',url:'https://www.australiantenders.com.au/issuer/68/tenders/adelaide-phn'},
+  // ── MURRAY PHN ──
+  {title:'Mental Health Stepped Care Services RFT',org:'Murray PHN',state:'VIC',type:'mental_health',closes:'Closed',closeDate:'2025-10-31',desc:'Stepped care mental health services across Murray PHN including low and high intensity therapies.',recomDate:'~Oct 2026',recomReason:'Annual stepped care cycle',url:'https://www.australiantenders.com.au/issuer/5800/tenders/murray-phn'},
+  {title:'Suicide Prevention Regional Coordinator EOI',org:'Murray PHN',state:'VIC',type:'mental_health',closes:'Closed',closeDate:'2025-09-01',desc:'Regional suicide prevention coordination and community engagement across Murray.',recomDate:'~Sep 2026',recomReason:'Annual coordinator role',url:'https://www.australiantenders.com.au/issuer/5800/tenders/murray-phn'},
+  {title:'After Hours GP and Nurse On Call Program',org:'Murray PHN',state:'VIC',type:'gp',closes:'Closed',closeDate:'2025-07-01',desc:'After hours primary care services including GP and nurse telephone triage for regional communities.',recomDate:'~Jul 2026',recomReason:'Annual financial year recommissioning',url:'https://www.australiantenders.com.au/issuer/5800/tenders/murray-phn'},
+  // ── WESTERN VICTORIA PHN ──
+  {title:'Psychological Therapies Stepped Care RFT',org:'Western Victoria PHN',state:'VIC',type:'mental_health',closes:'Closed',closeDate:'2025-11-01',desc:'Low and high intensity psychological therapies for mild-moderate mental health across Western Victoria.',recomDate:'~Nov 2026',recomReason:'Annual stepped care recommissioning',url:'https://www.australiantenders.com.au/issuer/8352/tenders/western-victoria-phn'},
+  {title:'GP Practice Support and Capacity Building EOI',org:'Western Victoria PHN',state:'VIC',type:'gp',closes:'Closed',closeDate:'2025-08-15',desc:'Practice support, QI and capacity building for general practices across Western Victoria.',recomDate:'~Aug 2026',recomReason:'Annual practice support cycle',url:'https://www.australiantenders.com.au/issuer/8352/tenders/western-victoria-phn'},
+  // ── NEPEAN BLUE MOUNTAINS PHN ──
+  {title:'Mental Health Stepped Care — Low Intensity Services',org:'Nepean Blue Mountains PHN',state:'NSW',type:'mental_health',closes:'Closed',closeDate:'2025-10-27',desc:'Low intensity digital and face-to-face mental health services for Nepean Blue Mountains.',recomDate:'~Oct 2026',recomReason:'Annual stepped care cycle',url:'https://www.australiantenders.com.au/issuer/6243/tenders/nepean-blue-mountains-phn'},
+  {title:'Suicide Prevention Local Response EOI',org:'Nepean Blue Mountains PHN',state:'NSW',type:'mental_health',closes:'Closed',closeDate:'2025-08-01',desc:'Local suicide prevention activities for Nepean Blue Mountains communities.',recomDate:'~Aug 2026',recomReason:'Annual suicide prevention funding cycle',url:'https://www.australiantenders.com.au/issuer/6243/tenders/nepean-blue-mountains-phn'},
+  {title:'After Hours Primary Care Services RFT',org:'Nepean Blue Mountains PHN',state:'NSW',type:'gp',closes:'Closed',closeDate:'2025-06-30',desc:'After hours GP and urgent care services for Nepean Blue Mountains.',recomDate:'~Jun 2026',recomReason:'Annual financial year recommissioning',url:'https://www.australiantenders.com.au/issuer/6243/tenders/nepean-blue-mountains-phn'},
+  // ── PERTH NORTH PHN ──
+  {title:'Mental Health Community Support Services RFT',org:'Perth North PHN',state:'WA',type:'mental_health',closes:'Closed',closeDate:'2025-11-30',desc:'Community-based mental health and psychosocial support services for Perth North.',recomDate:'~Nov 2026',recomReason:'Annual community support recommissioning',url:'https://www.australiantenders.com.au/issuer/6800/tenders/perth-north-phn'},
+  {title:'GP Workforce Support — Practice Incentives Program',org:'Perth North PHN',state:'WA',type:'gp',closes:'Closed',closeDate:'2025-09-01',desc:'GP workforce support and practice incentives for Perth North.',recomDate:'~Sep 2026',recomReason:'Annual workforce support cycle',url:'https://www.australiantenders.com.au/issuer/6800/tenders/perth-north-phn'},
+  {title:'AOD Treatment Services EOI',org:'Perth North PHN',state:'WA',type:'mental_health',closes:'Closed',closeDate:'2025-07-14',desc:'Alcohol and other drugs treatment and counselling services for Perth North.',recomDate:'~Jul 2027',recomReason:'2-year contract, next round Jul 2027',url:'https://www.australiantenders.com.au/issuer/6800/tenders/perth-north-phn'},
+  // ── PERTH SOUTH PHN ──
+  {title:'Psychological Therapies — Focused Psychological Strategies',org:'Perth South PHN',state:'WA',type:'mental_health',closes:'Closed',closeDate:'2025-10-25',desc:'FPS and psychological therapies under stepped care for Perth South.',recomDate:'~Oct 2026',recomReason:'Annual stepped care recommissioning',url:'https://www.australiantenders.com.au/issuer/6801/tenders/perth-south-phn'},
+  {title:'Suicide Prevention Aftercare — Follow-Up Services',org:'Perth South PHN',state:'WA',type:'mental_health',closes:'Closed',closeDate:'2025-06-01',desc:'Post-attempt suicide prevention aftercare and follow-up for Perth South.',recomDate:'~Jun 2026',recomReason:'Annual aftercare funding cycle',url:'https://www.australiantenders.com.au/issuer/6801/tenders/perth-south-phn'},
+  // ── PRIMARY HEALTH TASMANIA ──
+  {title:'Mental Health Stepped Care Services RFT',org:'Primary Health Tasmania',state:'TAS',type:'mental_health',closes:'Closed',closeDate:'2025-11-01',desc:'Stepped care mental health services across Tasmania.',recomDate:'~Nov 2026',recomReason:'Annual stepped care cycle',url:'https://www.australiantenders.com.au/issuer/6802/tenders/primary-health-tasmania'},
+  {title:'AOD Community Services EOI',org:'Primary Health Tasmania',state:'TAS',type:'mental_health',closes:'Closed',closeDate:'2025-09-01',desc:'AOD community treatment and support across Tasmania.',recomDate:'~Sep 2027',recomReason:'2-year contract term',url:'https://www.australiantenders.com.au/issuer/6802/tenders/primary-health-tasmania'},
+  {title:'GP After Hours Program — Regional Tasmania',org:'Primary Health Tasmania',state:'TAS',type:'gp',closes:'Closed',closeDate:'2025-07-01',desc:'After hours GP services for regional and rural Tasmanian communities.',recomDate:'~Jul 2026',recomReason:'Annual financial year recommissioning',url:'https://www.australiantenders.com.au/issuer/6802/tenders/primary-health-tasmania'},
+  // ── CAPITAL HEALTH NETWORK (ACT) ──
+  {title:'Mental Health and Suicide Prevention Services RFT',org:'Capital Health Network (ACT)',state:'ACT',type:'mental_health',closes:'Closed',closeDate:'2025-10-01',desc:'Integrated mental health and suicide prevention services for ACT.',recomDate:'~Oct 2026',recomReason:'Annual MH recommissioning cycle',url:'https://www.australiantenders.com.au/issuer/1050/tenders/capital-health-network'},
+  {title:'Psychosocial Support — NDIS Interface EOI',org:'Capital Health Network (ACT)',state:'ACT',type:'mental_health',closes:'Closed',closeDate:'2025-08-01',desc:'Psychosocial support at the NDIS interface for people with mental health conditions in ACT.',recomDate:'~Aug 2026',recomReason:'Annual psychosocial funding cycle',url:'https://www.australiantenders.com.au/issuer/1050/tenders/capital-health-network'},
+  {title:'GP Practice Support — Quality Improvement Program',org:'Capital Health Network (ACT)',state:'ACT',type:'gp',closes:'Closed',closeDate:'2025-06-30',desc:'GP practice support, QI facilitation and accreditation assistance across ACT.',recomDate:'~Jun 2026',recomReason:'Annual financial year recommissioning',url:'https://www.australiantenders.com.au/issuer/1050/tenders/capital-health-network'},
+  // ── DARLING DOWNS & WEST MORETON PHN ──
+  {title:'Mental Health Stepped Care — Regional Services RFT',org:'Darling Downs & West Moreton PHN',state:'QLD',type:'mental_health',closes:'Closed',closeDate:'2025-10-13',desc:'Stepped care mental health services for Darling Downs and West Moreton.',recomDate:'~Oct 2026',recomReason:'Annual stepped care recommissioning',url:'https://www.australiantenders.com.au/issuer/1834/tenders/darling-downs-and-west-moreton-phn'},
+  {title:'AOD Services — Regional Communities RFT',org:'Darling Downs & West Moreton PHN',state:'QLD',type:'mental_health',closes:'Closed',closeDate:'2025-06-30',desc:'AOD assessment, counselling and withdrawal management for regional Qld.',recomDate:'~Jun 2027',recomReason:'2-year contract, next round Jun 2027',url:'https://www.australiantenders.com.au/issuer/1834/tenders/darling-downs-and-west-moreton-phn'},
+  // ── NORTHERN QUEENSLAND PHN ──
+  {title:'Mental Health Stepped Care Services RFT',org:'Northern Queensland PHN',state:'QLD',type:'mental_health',closes:'Closed',closeDate:'2025-09-19',desc:'Stepped care mental health services across Northern Queensland including remote communities.',recomDate:'~Sep 2026',recomReason:'Annual stepped care cycle',url:'https://www.australiantenders.com.au/issuer/5953/tenders/northern-queensland-phn'},
+  {title:'Indigenous Primary Care and GP Support Program',org:'Northern Queensland PHN',state:'QLD',type:'gp',closes:'Closed',closeDate:'2025-07-23',desc:'Primary care support and workforce capacity building for Indigenous communities in North Queensland.',recomDate:'~Jul 2026',recomReason:'Annual Indigenous health program cycle',url:'https://www.australiantenders.com.au/issuer/5953/tenders/northern-queensland-phn'},
+  {title:'Suicide Prevention in Pharmacy Program',org:'Murrumbidgee PHN',state:'NSW',type:'mental_health',closes:'Closed 11 Feb 2026',closeDate:'2026-02-11',desc:'Funding for 10 Murrumbidgee pharmacies for suicide prevention training.',recomDate:'~Feb 2027',recomReason:'Annual program, consistent recommissioning cycle',url:'https://www.australiantenders.com.au/issuer/5129/tenders/murrumbidgee-phn'},
+  {title:'Central Coast GP Scholarship Program — Expressions of Interest',org:'Hunter New England & CC PHN',state:'NSW',type:'gp',closes:'Closed 29 Oct 2025',closeDate:'2025-10-29',desc:'Short term paid placements within clinical areas of Central Coast Local Health District for GP scholarship recipients.',recomDate:'~Oct 2026',recomReason:'Annual scholarship program, consistent annual cycle',url:'https://www.australiantenders.com.au/issuer/3760/tenders/hunter-new-england-central-coast-phn-(hnecc-ltd)'},
+];
+
+function ra(){
+  const liveTitles=new Set(live.map(t=>t.title.toLowerCase().trim()));
+  const today=new Date(); today.setHours(0,0,0,0);
+  const fb=srt(filt(BASE_OPEN.filter(t=>{
+    if(liveTitles.has(t.title.toLowerCase().trim())) return false;
+    // Exclude pre-loaded open tenders whose closeDate has passed
+    if(t.closeDate && new Date(t.closeDate) < today) return false;
+    return true;
+  })));
+  const fl=srt(filt(live));
+  const allO=[...fl,...fb];
+  // 12-month window: from (now - 365 days) to now, recalculated on every render
+  const now12=new Date();
+  const cutoff12=new Date(now12.getTime()-365*24*60*60*1000).toISOString().slice(0,10);
+  const seenC=new Set();
+  const allC=[...closedLive,...BASE_CLOSED]
+    .filter(t=>{
+      // Must have a closeDate and be within 12 months
+      if(!t.closeDate) return false;
+      if(t.closeDate < cutoff12) return false;
+      const k=(t.title+t.org).toLowerCase();
+      if(seenC.has(k))return false;
+      seenC.add(k);
+      return true;
+    })
+    .sort((a,b)=>(b.closeDate||'0').localeCompare(a.closeDate||'0'));
+  const fc=filt(allC);
+
+  document.getElementById('s0').textContent=allO.length;
+  document.getElementById('s1').textContent=allO.filter(t=>t.type==='gp').length;
+  document.getElementById('s2').textContent=allO.filter(t=>t.type==='mental_health').length;
+  document.getElementById('s3').textContent=allO.filter(t=>{const d=dl(t.closeDate);return d!=null&&d>=0&&d<=14}).length;
+  document.getElementById('s4').textContent=fc.length;
+  document.getElementById('rcnt').textContent=`${allO.length} open · ${fc.length} closed`;
+  document.getElementById('opBadge').textContent=`${allO.length} open`;
+  document.getElementById('clBadge').textContent=`${fc.length} closed`;
+
+  if(live.length>0){document.getElementById('lsec').classList.remove('hidden');document.getElementById('lc').innerHTML=fl.length?fl.map((t,i)=>cardH(t,i,true)).join(''):'<div class="empty">No live results match filters</div>';}
+  document.getElementById('bc').innerHTML=fb.length?fb.map((t,i)=>cardH(t,i,false)).join(''):'<div class="empty">No results match filters</div>';
+  document.getElementById('cc').innerHTML=fc.length?fc.map((t,i)=>cardH(t,i,false)).join(''):'<div class="empty">No closed tenders match filters</div>';
+}
+
+// ── FETCH australiantenders.com.au issuer page ───────────────────────────
+// These pages are public HTML, no auth, no CORS block.
+// Primary: direct fetch. Fallback: allorigins proxy.
+async function fetchAT(p){
+  const url = atUrl(p);
+  // Try direct first (works when served from same origin or permissive CORS)
+  for(const attempt of [
+    ()=>fetch(url,{headers:{'Accept':'text/html'}}),
+    ()=>fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,{}),
+    ()=>fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`,{}),
+  ]){
+    try{
+      const r=await attempt();
+      if(!r.ok) continue;
+      const ct=r.headers.get('content-type')||'';
+      if(ct.includes('json')){
+        const j=await r.json();
+        if(j&&j.contents&&j.contents.length>500) return j.contents;
+        continue;
+      }
+      const t=await r.text();
+      if(t&&t.length>500) return t;
+    }catch(e){}
+  }
+  return null;
+}
+
+// ── PARSE australiantenders.com.au page ──────────────────────────────────
+// The page structure: tender title as heading, then description snippet,
+// then "· {Location} · {DD Month YYYY} · Current" OR "· Closed"
+// We extract each tender block between the repeating patterns.
+function parseAT(html, phn){
+  const open=[], closed=[];
+  const now = new Date();
+  // 12-month window is dynamic: from (now - 365 days) to now
+  const windowStart = new Date(now.getTime() - 365*24*60*60*1000);
+
+  // Decode HTML entities, strip tags
+  const decode = s => s
+    .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ')
+    .replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&#\d+;/g,' ');
+
+  const clean = decode(html)
+    .replace(/<scr'+'ipt[\s\S]*?<\/scr'+'ipt>/gi,'')
+    .replace(/<style[\s\S]*?<\/style>/gi,'')
+    .replace(/<br\s*\/?>/gi,' \n')
+    .replace(/<\/(?:p|div|li|h[1-6]|tr|td)>/gi,' \n')
+    .replace(/<[^>]+>/g,' ')
+    .replace(/[ \t]+/g,' ')
+    .replace(/\n{3,}/g,'\n\n');
+
+  // Split into lines, rejecting nav/boilerplate
+  const lines = clean.split('\n')
+    .map(l=>l.trim())
+    .filter(l=>l.length>10);
+
+  // Identify tender blocks by looking for lines followed by a status marker
+  // Status pattern: "DD Month YYYY · Current" or "DD Month YYYY · Closed"
+  // or just "· Current" or "· Closed"
+  const dateStatusRe = /(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(20\d{2})\s*·\s*(Current|Closed|Future)/i;
+  const statusOnlyRe = /·\s*(Current|Closed|Future)\s*$/i;
+  const shortDateRe  = /\b(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(20\d{2})\b/i;
+  const mmyyyy       = /\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(20\d{2})\b/i;
+
+  // Boilerplate lines to skip
+  const SKIP = /^(trusted by|save your time|monitor tenders|join today|please see below|search tenders|we monitor|sign up to|cookie|terms and conditions|privacy policy|copyright \d|footer|breadcrumb|skip to content)/i;
+
+  // Walk lines looking for tender entries
+  // A tender entry is: title line(s) + optional desc + status line
+  let i=0;
+  while(i<lines.length){
+    const line=lines[i];
+    if(SKIP.test(line)){i++;continue;}
+
+    // Check if this or next few lines contain a status marker
+    let statusLine='', titleLine='', descLines=[], foundAt=-1;
+    for(let j=i;j<Math.min(i+6,lines.length);j++){
+      if(dateStatusRe.test(lines[j])||statusOnlyRe.test(lines[j])){
+        foundAt=j;
+        statusLine=lines[j];
+        titleLine=lines[i];
+        descLines=lines.slice(i+1,j);
+        break;
+      }
+    }
+
+    if(foundAt===-1){i++;continue;}
+
+    // Skip boilerplate titles
+    if(SKIP.test(titleLine)||titleLine.length<10||titleLine.length>300){i=foundAt+1;continue;}
+
+    // Parse status and date
+    let isClosed=false, closeDate=null, closes='See portal';
+    const dsm=dateStatusRe.exec(statusLine);
+    if(dsm){
+      const d=parseInt(dsm[1]);
+      const mo=MONTHS_L[dsm[2].toLowerCase()]||1;
+      const y=parseInt(dsm[3]);
+      isClosed=dsm[4].toLowerCase()==='closed'; const isFuture=dsm[4].toLowerCase()==='future';
+      closeDate=`${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      closes=`${d} ${dsm[2].slice(0,3)} ${y}`;
+    } else {
+      isClosed=/closed/i.test(statusLine); const isFuture2=/future/i.test(statusLine)&&!isClosed;
+      // Try to find a date nearby
+      for(let k=i;k<=foundAt;k++){
+        const sm=shortDateRe.exec(lines[k])||mmyyyy.exec(lines[k]);
+        if(sm){
+          const ms=shortDateRe.exec(lines[k]);
+          if(ms){
+            const d=parseInt(ms[1]);
+            const mo=MONTHS_S[ms[2].toLowerCase().slice(0,3)]||MONTHS_L[ms[2].toLowerCase()]||1;
+            const y=parseInt(ms[3]);
+            closeDate=`${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            closes=`${d} ${ms[2].slice(0,3)} ${y}`;
+          }
+          break;
+        }
+      }
+    }
+
+    // Title cleanup — strip leading bullets, numbers, punctuation
+    let title = titleLine.replace(/^[\s\-•·▸▶►\d.]+/,'').trim();
+    if(title.length>120) title=title.slice(0,117)+'…';
+
+    // Desc — join relevant lines
+    const desc=(descLines.filter(l=>l.length>20&&!SKIP.test(l)).slice(0,3).join(' ')||title).slice(0,230);
+
+    // Type detection
+    let type='phn';
+    const tx=title+' '+desc;
+    if(/mental health|psycholog|headspace|suicide|wellbeing|counsell|sewb|distress|crisis/i.test(tx)) type='mental_health';
+    else if(/general pract|\bgp\b|\bGPs\b|after.hour|primary care|bulk.bill|gp grant|practice nurse|practice manager|medical practice/i.test(tx)) type='gp';
+    else if(/allied health|physio|podiat|dietit|occupational|speech|exercise physio/i.test(tx)) type='allied';
+    else if(/specialist|imaging|pathology/i.test(tx)) type='specialist';
+
+    const url = atUrl(phn);
+
+    if(isClosed){
+      // Only include if within 12 months of today
+      if(closeDate){
+        const cd=new Date(closeDate);
+        if(cd>=windowStart && cd<=now){
+          closed.push({
+            title, org:phn.name, state:phn.state, type,
+            closes:`Closed ${closes}`, closeDate, desc,
+            url, source:'live',
+            closedNote:`Watch ${phn.name} for re-commissioning`
+          });
+        }
+      }
+    } else {
+      var closeLabel = (typeof isFuture!='undefined'&&isFuture) ? 'Coming: '+closes : (typeof isFuture2!='undefined'&&isFuture2) ? 'Coming: '+closes : closes;
+      open.push({title,org:phn.name,state:phn.state,type,closes:closeLabel,closeDate,desc,url,source:'live'});
+    }
+
+    i=foundAt+1;
+  }
+
+  // Deduplicate
+  const seenO=new Set(), seenC=new Set();
+  const dedup=(arr,s)=>arr.filter(t=>{
+    const k=t.title.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,40);
+    if(s.has(k))return false; s.add(k); return true;
+  });
+
+  return{open:dedup(open,seenO).slice(0,30), closed:dedup(closed,seenC).slice(0,40)};
+}
+
+// ── GRID ─────────────────────────────────────────────────────────────────
+function initGrid(){
+  document.getElementById('sgrid').innerHTML=PHNS.map(p=>`
+    <div class="pc pend" id="pc${p.id}" onclick="window.open('${atUrl(p)}','_blank')">
+      <div class="pc-ic">⏸</div>
+      <div class="pc-nm">${p.name}</div>
+      <div class="pc-st">${p.state}</div>
+      <div class="pc-ct" id="pcc${p.id}"></div>
+      <div class="pc-bar"><div class="pc-bi" id="pcb${p.id}"></div></div>
+    </div>`).join('');
+}
+
+function setPC(id,status,count,msg){
+  phnSt[id]={status,count};
+  const el=document.getElementById('pc'+id); if(!el)return;
+  el.className='pc '+({pending:'pend',checking:'chk',found:'fnd',empty:'mty',error:'err'}[status]||'pend');
+  el.querySelector('.pc-ic').textContent={pending:'⏸',checking:'⟳',found:'✅',empty:'—',error:'⚠️'}[status]||'—';
+  const cc=document.getElementById('pcc'+id);
+  if(cc) cc.textContent=count>0?`${count} found`:msg||'';
+  const done=Object.values(phnSt).filter(s=>['found','empty','error'].includes(s.status)).length;
+  const pct=Math.round((done/PHNS.length)*100);
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pp').textContent=pct+'%';
+  document.getElementById('dnBadge').textContent=`${done} / ${PHNS.length} scanned`;
+  document.getElementById('s5').textContent=done;
+}
+
+function addLog(icon,name,cls,msg){
+  const el=document.getElementById('plog');
+  const r=document.createElement('div'); r.className='pr';
+  r.innerHTML=`<span>${icon}</span><span class="${cls} lphn">${name}</span><span>${msg}</span>`;
+  el.insertBefore(r,el.firstChild);
+  while(el.children.length>16) el.removeChild(el.lastChild);
+}
+
+// ── MAIN SCAN ─────────────────────────────────────────────────────────────
+async function startScan(manual=false){
+  if(location.protocol==='file:'){
+    setStatus('inf','&#128274; <strong>Tip:</strong> For live scanning, host this file on a web server (e.g. <a href="https://app.netlify.com/drop" target="_blank" style="color:var(--blue)">Netlify Drop</a>) rather than opening as a local file. Pre-loaded verified tenders are fully functional now.');
+    document.getElementById('sci').classList.remove('spin');
+    document.getElementById('scl').textContent='Scan Now';
+    document.getElementById('scanBtn').disabled=false;
+    ra(); return;
+  }
+  const btn=document.getElementById('scanBtn');
+  btn.disabled=true;
+  document.getElementById('sci').classList.add('spin');
+  document.getElementById('scl').textContent='Scanning…';
+  document.getElementById('pw').classList.add('on');
+  document.getElementById('plog').innerHTML='';
+  document.getElementById('pf').style.width='0%';
+  const scanTime=new Date();
+  document.getElementById('fd').textContent=scanTime.toLocaleString('en-AU',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  if(manual){live=[];closedLive=[];phnSt={};}
+  setStatus('l',`📋 Fetching all ${PHNS.length} PHNs from australiantenders.com.au — listing open tenders and closed within 12 months…`);
+
+  const BS=4; // australiantenders.com.au handles concurrent requests fine
+  for(let i=0;i<PHNS.length;i+=BS){
+    const batch=PHNS.slice(i,i+BS);
+    batch.forEach(p=>setPC(p.id,'checking',0));
+
+    await Promise.all(batch.map(async p=>{
+      try{
+        const html=await fetchAT(p);
+        if(!html){
+          setPC(p.id,'error',0,'No response');
+          addLog('⚠️',p.name,'lerr','No response from australiantenders.com.au');
+          return;
+        }
+        const{open,closed}=parseAT(html,p);
+        if(open.length||closed.length){
+          // Merge deduplicating against already-found titles
+          const liveTitles=new Set(live.map(t=>t.title.toLowerCase()));
+          const closedTitles=new Set(closedLive.map(t=>t.title.toLowerCase()));
+          live.push(...open.filter(t=>!liveTitles.has(t.title.toLowerCase())));
+          closedLive.push(...closed.filter(t=>!closedTitles.has(t.title.toLowerCase())));
+          setPC(p.id,'found',open.length+closed.length);
+          addLog('✅',p.name,'lok',`${open.length} open · ${closed.length} closed (12mo)`);
+        } else {
+          setPC(p.id,'empty',0,'No listings found');
+          addLog('—',p.name,'lnone','No listings on australiantenders');
+        }
+      }catch(err){
+        setPC(p.id,'error',0,'Error');
+        addLog('⚠️',p.name,'lerr','Fetch error');
+      }
+    }));
+
+    ra();
+    await new Promise(r=>setTimeout(r,400));
+  }
+
+  const totalOpen=live.length, totalClosed=closedLive.length;
+  const ts=scanTime.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('lstBadge').textContent=`🟢 Scanned ${ts}`;
+  setStatus('ok',
+    `✅ Scan complete — <strong>${totalOpen} open</strong> + <strong>${totalClosed} closed (last 12 months)</strong> across ${Object.values(phnSt).filter(s=>s.status==='found').length} PHNs. Source: australiantenders.com.au · Next refresh in 4h.`
+  );
+  btn.disabled=false;
+  document.getElementById('sci').classList.remove('spin');
+  document.getElementById('scl').textContent='Scan Now';
+  ra();
+
+  if(refreshTimer) clearTimeout(refreshTimer);
+  nextAt=Date.now()+RI;
+  refreshTimer=setTimeout(()=>startScan(false),RI);
+}
+
+function setStatus(cls,html){document.getElementById('sb').className='sbar '+cls;document.getElementById('sm').innerHTML=html;}
+function sf(f,btn){activeF=f;document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');ra();}
+function ss(s,btn){activeS=s;document.querySelectorAll('.so').forEach(b=>b.classList.remove('on'));btn.classList.add('on');ra();}
+function st(tab,btn){
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  document.querySelectorAll('.tab-pane').forEach(function(el){
+    el.style.display = el.id === 'tab-'+tab ? 'block' : 'none';
+  });
+}
+
+
+// ── COUNTDOWN ─────────────────────────────────────────────────────────────
+function startCountdown(){
+  if(cdTimer) clearInterval(cdTimer);
+  cdTimer=setInterval(()=>{
+    if(!nextAt){document.getElementById('cd').textContent='–';return;}
+    const ms=nextAt-Date.now();
+    if(ms<=0){document.getElementById('cd').textContent='0:00:00';return;}
+    const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000),s=Math.floor((ms%60000)/1000);
+    document.getElementById('cd').textContent=`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  },1000);
+}
+
+// Catch up if tab was hidden during a scheduled refresh
+document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden&&nextAt&&Date.now()>=nextAt) startScan(false);
+});
+
+
+
+// ── AUSTENDER LIVE FEED ──────────────────────────────────────────────────
+// Queries grants.gov.au open data API for PHN-relevant grants
+// Updates the federal tab with live grant status
+async function fetchAusTender(){
+  const SEARCH_TERMS = ['primary health network','PHN','primary care','mental health','general practice'];
+  const AGENCIES = ['Department of Health','Department of Health and Aged Care'];
+  try {
+    // AusTender has a public grants RSS/JSON feed
+    const url = 'https://www.tenders.gov.au/api/Grants/json?keyword=primary+health+network&status=open&rows=50';
+    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+    const r = await fetch(proxy);
+    if(!r.ok) return;
+    const j = await r.json();
+    if(!j.contents) return;
+    const data = JSON.parse(j.contents);
+    if(!data || !data.results) return;
+    // Update the federal scan status badge
+    const badge = document.getElementById('fed-scan-badge');
+    if(badge) badge.textContent = `Live: ${data.results.length} grants found · ${new Date().toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'})}`;
+  } catch(e) {
+    // Silently fail - preloaded federal data still shows
+  }
+}
+
+// ── DIRECT PHN WEBSITE SCAN ──────────────────────────────────────────────
+// 4 PHNs with scrapable plain-HTML tender pages (no login required):
+//   HNC, NWMPHN, HNECC, Western NSW PHN
+// Results merged into live[] array alongside australiantenders.com.au results
+
+const PHN_DIRECT = [
+  {
+    id:'hnc', name:'North Coast PHN (HNC)', state:'NSW',
+    url:'https://hnc.org.au/tenders/',
+    // HNC lists tenders as <h3> or <h2> headings with closing date text nearby
+    parse: function(html){
+      var results = [];
+      // Match tender titles and dates from HNC tender page
+      var blocks = html.match(/<(?:h2|h3|h4)[^>]*>([^<]{10,})<\/(?:h2|h3|h4)>/gi) || [];
+      blocks.forEach(function(b){
+        var title = b.replace(/<[^>]+>/g,'').trim();
+        if(title.length < 10) return;
+        // Skip nav/heading items
+        if(/^(tenders|commissioning|home|about|contact|menu|news)/i.test(title)) return;
+        // Look for a date near this block
+        var dateMatch = html.match(/(\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+20\d{2})/i);
+        results.push({
+          title: title,
+          org: 'North Coast PHN (HNC)',
+          state: 'NSW', type: 'phn_service',
+          closes: dateMatch ? dateMatch[1] : 'See HNC website',
+          closeDate: null,
+          desc: 'Direct from hnc.org.au/tenders — check HNC website for full details.',
+          url: 'https://hnc.org.au/tenders/',
+          source: 'phn-direct'
+        });
+      });
+      return results;
+    }
+  },
+  {
+    id:'nwmphn', name:'North Western Melbourne PHN', state:'VIC',
+    url:'https://nwmphn.org.au/our-work/commissioning/current-tenders-and-eois/',
+    parse: function(html){
+      var results = [];
+      // NWMPHN lists tenders as heading + "Closes [date]" text
+      var tenderBlocks = html.split(/(?=<h[234])/i);
+      tenderBlocks.forEach(function(block){
+        var titleMatch = block.match(/<h[234][^>]*>([^<]{10,})<\/h[234]>/i);
+        if(!titleMatch) return;
+        var title = titleMatch[1].trim();
+        if(/^(tenders|current|eoi|commissioning|home|about|closes|menu)/i.test(title)) return;
+        if(title.length < 8) return;
+        // Extract "Closes [date]" 
+        var closeMatch = block.match(/[Cc]loses?\s+(?:[A-Z][a-z]+day,?\s+)?(\d{1,2}\s+[A-Z][a-z]+\s+20\d{2}|\d{1,2}\/\d{1,2}\/20\d{2})/);
+        var closeStr = closeMatch ? closeMatch[1] : 'See NWMPHN website';
+        results.push({
+          title: title,
+          org: 'North Western Melbourne PHN',
+          state: 'VIC', type: 'phn_service',
+          closes: closeStr,
+          closeDate: null,
+          desc: 'Direct from nwmphn.org.au — register at portal.tenderlink.com/mpcn for full documents.',
+          url: 'https://nwmphn.org.au/our-work/commissioning/current-tenders-and-eois/',
+          source: 'phn-direct'
+        });
+      });
+      return results;
+    }
+  },
+  {
+    id:'hnecc', name:'Hunter New England & CC PHN', state:'NSW',
+    url:'https://thephn.com.au/what-we-do/commissioning-2/upcoming-commissioning-opportunities-and-announcements',
+    parse: function(html){
+      var results = [];
+      var tenderBlocks = html.split(/(?=<h[234])/i);
+      tenderBlocks.forEach(function(block){
+        var titleMatch = block.match(/<h[234][^>]*>([^<]{10,})<\/h[234]>/i);
+        if(!titleMatch) return;
+        var title = titleMatch[1].trim();
+        if(/^(upcoming|commissioning|opportunities|announcements|home|about|menu|news)/i.test(title)) return;
+        if(title.length < 10) return;
+        var closeMatch = block.match(/[Cc]los(?:ing|es?)\s+(?:date[:\s]+)?(?:[A-Z][a-z]+day,?\s+)?(\d{1,2}\s+[A-Z][a-z]+\s+20\d{2})/);
+        results.push({
+          title: title,
+          org: 'Hunter New England & CC PHN',
+          state: 'NSW', type: 'phn_service',
+          closes: closeMatch ? closeMatch[1] : 'See HNECC website',
+          closeDate: null,
+          desc: 'Direct from thephn.com.au — check HNECC website for full details.',
+          url: 'https://thephn.com.au/what-we-do/commissioning-2/upcoming-commissioning-opportunities-and-announcements',
+          source: 'phn-direct'
+        });
+      });
+      return results;
+    }
+  },
+  {
+    id:'wnswphn', name:'Western NSW PHN', state:'NSW',
+    url:'https://wnswphn.org.au/tenders',
+    parse: function(html){
+      var results = [];
+      var tenderBlocks = html.split(/(?=<h[234])/i);
+      tenderBlocks.forEach(function(block){
+        var titleMatch = block.match(/<h[234][^>]*>([^<]{10,})<\/h[234]>/i);
+        if(!titleMatch) return;
+        var title = titleMatch[1].trim();
+        if(/^(tenders|grants|home|about|menu|western|procurement)/i.test(title)) return;
+        if(title.length < 10) return;
+        var closeMatch = block.match(/[Cc]los(?:ing|es?)\s+(?:date[:\s]+)?(?:[A-Z][a-z]+day,?\s+)?(\d{1,2}\s+[A-Z][a-z]+\s+20\d{2})/);
+        results.push({
+          title: title,
+          org: 'Western NSW PHN',
+          state: 'NSW', type: 'phn_service',
+          closes: closeMatch ? closeMatch[1] : 'See WNSW website',
+          closeDate: null,
+          desc: 'Direct from wnswphn.org.au — register at TenderLink for full documents.',
+          url: 'https://wnswphn.org.au/tenders',
+          source: 'phn-direct'
+        });
+      });
+      return results;
+    }
+  }
+];
+
+async function scanPHNDirect(){
+  var newResults = [];
+  var proxy = 'https://api.allorigins.win/get?url=';
+  for(var i=0; i<PHN_DIRECT.length; i++){
+    var phn = PHN_DIRECT[i];
+    try{
+      var r = await fetch(proxy + encodeURIComponent(phn.url));
+      if(!r.ok) continue;
+      var j = await r.json();
+      if(!j.contents) continue;
+      var parsed = phn.parse(j.contents);
+      // Deduplicate against existing live results
+      parsed.forEach(function(t){
+        var exists = live.some(function(l){ return l.title.toLowerCase().trim() === t.title.toLowerCase().trim(); });
+        if(!exists && t.title.length > 5) newResults.push(t);
+      });
+    } catch(e){ /* silently skip */ }
+  }
+  if(newResults.length > 0){
+    live = live.concat(newResults);
+    ra();
+    var badge = document.getElementById('direct-scan-badge');
+    if(badge) badge.textContent = newResults.length + ' direct PHN results';
+  }
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+initGrid(); ra(); startCountdown();
+// Show only open tab on load
+document.querySelectorAll('.tab-pane').forEach(function(el){
+  el.style.display = el.id === 'tab-open' ? 'block' : 'none';
+});
+nextAt=Date.now()+RI;
+startScan(true);
+fetchAusTender();
+scanPHNDirect();
+</script>
+<div style="text-align:center;padding:22px;font-size:11px;color:var(--dim);border-top:1px solid var(--border);margin-top:20px;background:#fff;">Created by <strong style="color:var(--navy)">Caitlin Burns</strong> · Avant Practice Solutions · PHN Tender Intelligence · Auto-refreshes every 4 hours</div>
+</body>
+</html>
